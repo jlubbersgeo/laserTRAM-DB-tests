@@ -3,8 +3,6 @@ title: "LaserTRAM-DB: A Time Resolved Analysis Module for the complete data redu
 date: \today
 author: "Jordan Lubbers, Adam Kent, Chris Russo"
 bibliography: "paper.bib"
-link-citations: true
-urlcolor: "blue"
 ---
 
 # Summary
