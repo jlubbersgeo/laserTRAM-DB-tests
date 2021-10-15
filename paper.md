@@ -7,17 +7,17 @@ bibliography: "paper.bib"
 
 # Summary
 
-LaserTRAM-DB is a dashboard for the complete processing pipeline of Laser Ablation Inductively Coupled Plasma Mass Spectrometry (LA-ICP-MS) data in geologic samples. As LA-ICP-MS data in geologic samples frequently have inclusions within them that do not represent the material being analyzed, user interaction is required to filter them out of the overall ablation signal. LaserTRAM-DB allows the user to filter which portion of the ablation peak is utilized in calculating concentrations, subsequently allowing for more accurate data to be obtained. Furthermore, it allows for the processing of not only individual spot analysis data but a line of spots gathered in rapid succession, reducing the time required for data reduction while still ensuring data quality. 
+LaserTRAM-DB is a dashboard for the complete processing pipeline of Laser Ablation Inductively Coupled Plasma Mass Spectrometry (LA-ICP-MS) data in geologic samples. As LA-ICP-MS data in geologic samples frequently have inclusions within them that do not represent the material being analyzed, user interaction is required to filter them out of the overall ablation signal. LaserTRAM-DB allows the user to filter which portion of the ablation peak is utilized in calculating concentrations, subsequently allowing for more accurate data to be obtained. Furthermore, it allows for the processing of not only individual spot analysis data but a line of spots gathered in rapid succession, reducing the time required for data reduction while still ensuring data quality.
 
 # Statement of Need
 
 Laser ablation inductively coupled plasma mass spectrometry (LA-ICP-MS) is a now a commonplace tool for the gathering of trace element (i.e., < .1 wt%) in the fields of igneous petrology and geochemistry. The last two decades have seen significant advances in both instrument capabilities and operating software allowing users to generate large volumes of in situ geochemical data in comparatively little time to previous methodologies (i.e., micro-drilling) while still maintaining high degrees of accuracy and precision. This has led to researchers generating significantly more trace element data in their projects and, ultimately, tackling questions that can only be answered with larger datasets pushing their fields forward into a more “data-driven” age.
 
-Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations (Figure 1). When integrated over a certain period of time (e.g., the duration of an analysis), a total number of counts for a given analyte per spot analysis can be quantified. This number is a function of many things, but namely: the number of analytes being analyzed, the dwell time of the ICP-MS on each analyte, and the total analysis time. While important to understand the so-called “ins and outs” of LA-ICP-MS, to help maximize the quality of data output from the instrument, they are not requisite for calculating concentrations from raw data. Currently, there are several proprietary and open-source software tools (e.g., SILLS - Guillong et al., 2008; Iolite - [@paton2011iolite]; LAtools - Branson et al., 2019; TERMITE - Mischel et al., 2017; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI).
+Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations (Figure 1). When integrated over a certain period of time (e.g., the duration of an analysis), a total number of counts for a given analyte per spot analysis can be quantified. This number is a function of many things, but namely: the number of analytes being analyzed, the dwell time of the ICP-MS on each analyte, and the total analysis time. While important to understand the so-called “ins and outs” of LA-ICP-MS, to help maximize the quality of data output from the instrument, they are not requisite for calculating concentrations from raw data. Currently, there are several proprietary and open-source software tools (e.g., SILLS - [@guillong2008appendix]; Iolite - [@paton2011iolite]; LAtools - [branson2019latools]; TERMITE - [mischel2017termite]; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI).
 
 # Governing Equations
 
-We calculate the concentration of analyte ($i$) in an unknown material ($u$) using the following relationship from  Longerich and others (1996):
+We calculate the concentration of analyte ($i$) in an unknown material ($u$) using the following relationship from  [@longerich1996inter]:
 $$
 {C_i}^u = \frac{{R_i}^u}{S} \tag{1.1}
 $$
@@ -29,7 +29,7 @@ $$
 
 ${R_i}^{std}$ and ${C_i}^{std}$ are the count rate and and concentration of analyte ($i$) in the calibration standard, ${R_{n}}^u$ and ${R_{n}}^{std}$ are the mean count rates of the internal standard in the unknown material and calibration standard, ${C_{n}}^{u}$ and ${C_{n}}^{std}$ are the concentrations of the internal standard in the unknown material and calibration standard.
 
-Kent and Ungerer (2006) re-arrange this relationship such that the count rate expressions always containin unknown analytes in the numerator:
+[@kent2006analysis] re-arrange this relationship such that the count rate expressions always containin unknown analytes in the numerator:
 $$
 {C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{\left[\frac{{R_i}^{std}}{{R_n}^{std}}\right]}\frac{{R_i}^u}{{R_{n}}^u} \tag{1.3}
 $$
@@ -42,7 +42,7 @@ $$
 N_i = median\left[\frac{cps_{i}}{cps_{is}}\right] \tag{2.1}
 $$
 
-where $cps_i$ is the background subtracted counts per second data for analyte ($i$), and $cps_{is}$ is the background subtracted counts per second data for the internal standard. Since counts per second is analogous to count rate above in Equation \ref{eq3}, we can simplify the above relationship to now reflect our $N_i$ values:
+where $cps_i$ is the background subtracted counts per second data for analyte ($i$), and $cps_{is}$ is the background subtracted counts per second data for the internal standard. Since counts per second is analogous to count rate above in Equation 1.3, we can simplify the above relationship to now reflect our $N_i$ values:
 $$
 {C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{{N_{i}}^{std}}{N_{i}}^u \tag{2.2}
 $$
@@ -84,7 +84,7 @@ where $m$ is the regression slope, $x$ is the analysis number, and $b$ is the in
 
 ## Uncertainties
 
-Uncertainties in calculated concentrations are calculated according to standard error propagation of uncertainties in products and quotients Taylor (1997) p.61:
+Uncertainties in calculated concentrations are calculated according to standard error propagation of uncertainties in products and quotients [@taylor1997introduction] p.61:
 $$
 \frac{\sigma_q}{\lvert q \rvert}  = \sqrt{\left(\frac{\sigma_x}{\lvert x\rvert}\right)^2+\left(\frac{\sigma_y}{\lvert y\rvert}\right)^2+\left(\frac{\sigma_z}{\lvert z\rvert}\right)^2+...\left(\frac{\sigma_n}{\lvert n\rvert}\right)^2} \tag{5.1}
 $$
