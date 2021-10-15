@@ -1,6 +1,14 @@
-# LaserTRAM-DB: A Time Resolved Analysis Module for the complete data reduction pipeline for LA-ICP-MS data
+---
+title: "LaserTRAM-DB: A Time Resolved Analysis Module for the complete data reduction pipeline for LA-ICP-MS data"
+date: \today
+author: "Jordan Lubbers"
+bibliography: "bibliography.bib"
+link-citations: true
+urlcolor: "blue"
+---
 
 **Jordan Lubbers$^1$, Adam Kent$^1$, Chris Russo$^1$** <br>
+
 $^1$College of Earth, Ocean, and Atmospheric Sciences: Oregon State University
 
 # Summary
@@ -119,3 +127,4 @@ Video tutorials on how to use each piece of software can be found at the followi
 We express our gratitude to the W.M. Keck Foundation for helping foster the labarotory environment that led to the genesis of this software.
 
 # References
+
