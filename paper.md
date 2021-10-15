@@ -33,10 +33,7 @@ LaserTRAM-DB is a dashboard for the complete processing pipeline of Laser Ablati
 
 Laser ablation inductively coupled plasma mass spectrometry (LA-ICP-MS) is a now a commonplace tool for the gathering of *in situ* trace element (i.e., < .1 wt%) data in the fields of igneous petrology and geochemistry. The last two decades have seen significant advances in both instrument capabilities and operating software, allowing users to generate large volumes of in situ geochemical data in comparatively little time to previous methodologies (i.e., micro-drilling) while still maintaining high degrees of accuracy and precision. This has led to researchers generating significantly more trace element data in their projects and, ultimately, tackling questions that can only be answered with larger datasets pushing their fields forward into a more “data-driven” age.
 
-Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations (\autoref{fig:rawdata}). In order to be converted into concentrations, a modest amount user input is required. Currently, there are several proprietary and open-source softwares (e.g., SILLS - @guillong2008appendix; Iolite - @paton2011iolite; LAtools - @branson2019latools; TERMITE - @mischel2017termite; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction to accomplish this task. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI).
-
-![Example of raw data for a single spot analysis from standard reference material BCR-2G showing the possibility of measuring > 25 analytes in a given experiment. The plateau in the middle is the signal that corresponds to the ablated material being measured by the ICP-MS, while the lower cps values on either side are background levels for each analyte. \label{fig:rawdata}](raw_data_fig.png)
-
+Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations. In order to be converted into concentrations, a modest amount user input is required. Currently, there are several proprietary and open-source softwares (e.g., SILLS - @guillong2008appendix; Iolite - @paton2011iolite; LAtools - @branson2019latools; TERMITE - @mischel2017termite; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction to accomplish this task. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI).
 
 # Governing Equations
 
@@ -97,9 +94,7 @@ $$
 $$
 Where $\sigma_i$ and $\mu_i$ are the standard deviation and mean of all of the calibration standard normalized ratios respectively and $n_i$ is the total number of calibration standard analyses for analyte ($i$).
 
-![Drift correction test for selected analytes in \autoref{fig:rawdata} illustrating analytes that are both drift corrected and not drift corrected in LaserCalc. \label{drift_correct}](drift_correction_figure.png)
-
-In brief, the only way drift correction happens is if there is a sufficiently large linear change in normalized count rates for the calibration standard over time that causes the RMSE of the regression to have lower values than the standard error of the mean (\autoref{fig:drift_correct}). This drift correction then uses the regression parameters (e.g., slope and intercept) to calculate a normalized count rate for the calibration standard at the point in time where an unknown was analyzed:
+In brief, the only way drift correction happens is if there is a sufficiently large linear change in normalized count rates for the calibration standard over time that causes the RMSE of the regression to have lower values than the standard error of the mean. This drift correction then uses the regression parameters (e.g., slope and intercept) to calculate a normalized count rate for the calibration standard at the point in time where an unknown was analyzed:
 
 $$
  {C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{\left[m_ix +b_i\right]}{N_i}^u \tag{4.1}
@@ -130,7 +125,7 @@ Where $RMSE_i$ is the Root Mean Squared Error as specified in the Drift Correcti
 
 # Data Output
 
-Both steps of the data processing pipeline (e.g., LaserTRAM and LaserCalc) allow the user to output progress in the form of an Excel spreadsheet that mimics the application datatable hosted in the web browser. Output follows tidy data format (e.g. @wickham2014tidy) where columns contain observation attributes (i.e., analytes values and associated metadata) and rows denote observations (i.e., an individual spot analysis)
+Both steps of the data processing pipeline (e.g., LaserTRAM and LaserCalc) allow the user to output progress in the form of an Excel spreadsheet that mimics the application datatable hosted in the web browser. Output follows tidy data format (e.g. @wickham2014tidy where columns contain observation attributes (i.e., analytes values and associated metadata) and rows denote observations (i.e., an individual spot analysis)
 
 # Use
 
