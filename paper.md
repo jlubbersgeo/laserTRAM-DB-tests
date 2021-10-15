@@ -65,7 +65,7 @@ $$
 N_i = median\left[\frac{cps_{i}}{cps_{is}}\right] \tag{2.1}
 $$
 
-where $cps_i$ is the background subtracted counts per second data for analyte ($i$), and $cps_{is}$ is the background subtracted counts per second data for the internal standard. Since counts per second is analogous to count rate above in Equation 1.3, we can simplify the above relationship to now reflect our $N_i$ values:
+Where $cps_i$ is the background subtracted counts per second data for analyte ($i$), and $cps_{is}$ is the background subtracted counts per second data for the internal standard. Since counts per second is analogous to count rate above in Equation 1.3, we can simplify the above relationship to now reflect our $N_i$ values:
 $$
 {C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{{N_{i}}^{std}}{N_{i}}^u \tag{2.2}
 $$
@@ -105,7 +105,7 @@ $$
  {C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{\left[m_ix +b_i\right]}{N_i}^u \tag{4.1}
 $$
 
-where $m$ is the regression slope, $x$ is the analysis number, and $b$ is the intercept for analyte $i$.
+Where $m$ is the regression slope, $x$ is the analysis number, and $b$ is the intercept for analyte $i$.
 
 ## Uncertainties
 
