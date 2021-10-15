@@ -31,15 +31,15 @@ LaserTRAM-DB is a dashboard for the complete processing pipeline of Laser Ablati
 
 # Statement of Need
 
-Laser ablation inductively coupled plasma mass spectrometry (LA-ICP-MS) is a now a commonplace tool for the gathering of *in situ* trace element (i.e., < .1 wt%) data in the fields of igneous petrology and geochemistry. The last two decades have seen significant advances in both instrument capabilities and operating software, allowing users to generate large volumes of in situ geochemical data in comparatively little time to previous methodologies (i.e., micro-drilling) while still maintaining high degrees of accuracy and precision. This has led to researchers generating significantly more trace element data in their projects and, ultimately, tackling questions that can only be answered with larger datasets pushing their fields forward into a more “data-driven” age.
+Laser ablation inductively coupled plasma mass spectrometry (LA-ICP-MS) is a now a commonplace tool for the gathering of *in situ* trace element (i.e., < .1 wt%) data in the fields of igneous petrology and geochemistry. The last two decades have seen significant advances in both instrument capabilities and operating software, allowing users to generate large volumes of *in situ* geochemical data in comparatively little time to previous methodologies (i.e., micro-drilling) while still maintaining high degrees of accuracy and precision. This has led to researchers generating significantly more trace element data in their projects and, ultimately, tackling questions that can only be answered with larger datasets pushing their fields forward into a more “data-driven” age.
 
-Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations. In order to be converted into accurate concentrations, a modest amount user input is required and should not be automated. Currently, there are several proprietary and open-source softwares (e.g., SILLS - @guillong2008appendix; Iolite - @paton2011iolite; LAtools - @branson2019latools; TERMITE - @mischel2017termite; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction to accomplish this task. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI) e.g., \autoref{lasertram_gui}. Built primarily using Plotly-Dash [Plotly Technologies @plotly], Numpy [@harris2020array], and pandas [@mckinney2010data], we present a completely open-source dashboard: Laser Time Resolved Analysis Module Dashboard (LaserTRAM-DB) that allows the user to calculate concentrations from raw LA-ICP-MS data with the flexibility of a GUI interface while maintaining the performance of the numerical python ecosystem. It is comprised of three parts:
+Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations. In order to be converted into accurate concentrations, a modest amount of user input is required and should not be automated. Currently, there are several proprietary and open-source softwares (e.g., SILLS - @guillong2008appendix; Iolite - @paton2011iolite; LAtools - @branson2019latools; TERMITE - @mischel2017termite; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction to accomplish this task. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI) e.g., \autoref{lasertram_gui}. Built primarily using Plotly-Dash [Plotly Technologies @plotly], Numpy [@harris2020array], and pandas [@mckinney2010data], we present a completely open-source dashboard: Laser Time Resolved Analysis Module Dashboard (LaserTRAM-DB) that allows the user to calculate concentrations from raw LA-ICP-MS data with the flexibility of a GUI interface while maintaining the performance of the numerical python ecosystem. It is comprised of three parts:
 
-1. **LaserTRAM:** Choosing an interval of interest from raw cps data in individual spot data and normalizing it to an internal. standard
+1. **LaserTRAM:** Choosing an interval of interest from raw cps data in individual spot analyses and normalizing it to an internal. standard
 
-2. **LaserTRAM profiler:** Functionally the same as LaserTRAM, however has tools that allow for the rapid inspection of a line of spots data gathered in quick succession.
+2. **LaserTRAM profiler:** Functionally the same as LaserTRAM, however has tools that allow for the rapid inspection of a line of spot analyses gathered in quick succession.
 
-3. **LaserCalc:** Takes the output from either LaserTRAM or LaserTRAM profiler and converts the normalized data into concentrations.
+3. **LaserCalc:** Takes the output from either LaserTRAM or LaserTRAM profiler and converts the normalized data into concentrations using the equations outlined below.
 
 ![LaserTRAM tab in LaserTRAM-DB illustrating the interface for reducing individual spot analyses. Shown is a spot analysis for standard reference material NIST-612. \label{lasertram_gui}](LaserTRAM_GUI.png)
 
@@ -47,19 +47,19 @@ Raw data output from LA-ICP-MS, however, is in the form of counts per second (cp
 
 We calculate the concentration of analyte ($i$) in an unknown material ($u$) using the following relationship from  @longerich1996inter:
 $$
-{C_i}^u = \frac{{R_i}^u}{S} \tag{1.1}
+{C_i}^u = \frac{{R_i}^u}{S} \tag{1}
 $$
 
 Where ${C_i}^u$ and ${R_i}^u$ are the concentration of analyte and count rate of analyte ($i$) in the unknown material, respectively, and $S$ is the normalized sensitivity. When using naturally occuring internal standards, $S$ can be defined as:
 $$
-S = \frac{{R_i}^{std}}{{C_i}^{std}}\left[\frac{{R_{n}}^u}{{R_{n}}^{std}} \frac{{C_{n}}^{std}}{{C_{n}}^{u}} \right]  \tag{1.2}
+S = \frac{{R_i}^{std}}{{C_i}^{std}}\left[\frac{{R_{n}}^u}{{R_{n}}^{std}} \frac{{C_{n}}^{std}}{{C_{n}}^{u}} \right]  \tag{2}
 $$
 
 ${R_i}^{std}$ and ${C_i}^{std}$ are the count rate and and concentration of analyte ($i$) in the calibration standard, ${R_{n}}^u$ and ${R_{n}}^{std}$ are the mean count rates of the internal standard in the unknown material and calibration standard, ${C_{n}}^{u}$ and ${C_{n}}^{std}$ are the concentrations of the internal standard in the unknown material and calibration standard.
 
 @kent2006analysis re-arrange this relationship such that the count rate expressions always containin unknown analytes in the numerator:
 $$
-{C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{\left[\frac{{R_i}^{std}}{{R_n}^{std}}\right]}\frac{{R_i}^u}{{R_{n}}^u} \tag{1.3}
+{C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{\left[\frac{{R_i}^{std}}{{R_n}^{std}}\right]}\frac{{R_i}^u}{{R_{n}}^u} \tag{3}
 $$
 
 ## Determining Normalized Ratios
@@ -67,24 +67,24 @@ $$
 The purpose of LaserTRAM-DB is to give the user complete control over how much of an analysis gets used in calculating concentrations (e.g., filtering out portions of the signal not reflective of the material under investigation). When a given interval has been chosen, every analyte is normalized to a chosen internal standard. LaserTRAM-DB allows for any analyte in the experiment to be used as the internal standard. Prior to normalization to an internal standard, raw data first has the background analyte levels subtracted from it. Background is determined by taking the median counts per second value for each analyte over the specified background range. Once data have been background subtracted, each normalized ratio is calculated the following way:
 
 $$
-N_i = median\left[\frac{cps_{i}}{cps_{is}}\right] \tag{2.1}
+N_i = median\left[\frac{cps_{i}}{cps_{is}}\right] \tag{4}
 $$
 
 Where $cps_i$ is the background subtracted counts per second data for analyte ($i$), and $cps_{is}$ is the background subtracted counts per second data for the internal standard. Since counts per second is analogous to count rate above in Equation 1.3, we can simplify the above relationship to now reflect our $N_i$ values:
 $$
-{C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{{N_{i}}^{std}}{N_{i}}^u \tag{2.2}
+{C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{{N_{i}}^{std}}{N_{i}}^u \tag{5}
 $$
 
 Here, ${N_{i}}^{std}$ and ${N_{i}}^{u}$ are the normalized counts per second value of analyte $i$ in the calibration standard and unknown, respectively. The uncertainty for any given normalized ratio is expressed as:
 
 $$
-SE = \frac{\sigma_{N_i}}{\sqrt{n}} \tag{2.3}
+SE = \frac{\sigma_{N_i}}{\sqrt{n}} \tag{6}
 $$
 
 $\sigma_N$ is the standard deviation of a given analyte's normalized ratio for the interval and $n$ is the number of time steps in the interval (i.e., cycles through the mass range). The relative standard error is then:
 
 $$
-{RSE_i}^u = \left[\frac{SE}{N_i}\right]100 \tag{2.4}
+{RSE_i}^u = \left[\frac{SE}{N_i}\right]100 \tag{7}
 $$
 
 Detection limits for each analyte are 3 standard deviations above the mean of the background levels as defined earlier. This then means that you have 99.7\% confidence of that analyte being above background levels. This is standard practice in LA-ICP-MS data reduction. To reflect this in data output, normalized ratios below detection limit are coded to show up as negative ratios in LaserTRAM that then get turned into "b.d.l." values in LaserCalc.
@@ -98,14 +98,14 @@ To calculate concentrations of a given analyte list in an unknown sample, the co
 To check for drift in calibration standard normalized ratios over time, a linear regression is applied to the calibration standard for each analyte, where the dependent variable is the count rate normalized to the internal standard and the independent variable is the analysis number. This regression and the observed data then receive a Root Mean Squared Error (RMSE)  value. A linear drift correction is applied to an analyte if the relative RMSE value for a given analyte is less than the RSE. Here RSE is defined as:
 
 $$
-{RSE_{i}}^{std} = \left[\frac{\frac{\sigma_i}{\sqrt{n}}}{\mu_i}\right]100 \tag{4.1}
+{RSE_{i}}^{std} = \left[\frac{\frac{\sigma_i}{\sqrt{n}}}{\mu_i}\right]100 \tag{8}
 $$
 Where $\sigma_i$ and $\mu_i$ are the standard deviation and mean of all of the calibration standard normalized ratios respectively and $n_i$ is the total number of calibration standard analyses for analyte ($i$).
 
 In brief, the only way drift correction happens is if there is a sufficiently large linear change in normalized count rates for the calibration standard over time that causes the RMSE of the regression to have lower values than the standard error of the mean. This drift correction then uses the regression parameters (e.g., slope and intercept) to calculate a normalized count rate for the calibration standard at the point in time where an unknown was analyzed:
 
 $$
- {C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{\left[m_ix +b_i\right]}{N_i}^u \tag{4.1}
+ {C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{\left[m_ix +b_i\right]}{N_i}^u \tag{9}
 $$
 
 Where $m$ is the regression slope, $x$ is the analysis number, and $b$ is the intercept for analyte $i$.
@@ -114,19 +114,19 @@ Where $m$ is the regression slope, $x$ is the analysis number, and $b$ is the in
 
 Uncertainties in calculated concentrations are calculated according to standard error propagation of uncertainties in products and quotients @taylor1997introduction p.61:
 $$
-\frac{\sigma_q}{\lvert q \rvert}  = \sqrt{\left(\frac{\sigma_x}{\lvert x\rvert}\right)^2+\left(\frac{\sigma_y}{\lvert y\rvert}\right)^2+\left(\frac{\sigma_z}{\lvert z\rvert}\right)^2+...\left(\frac{\sigma_n}{\lvert n\rvert}\right)^2} \tag{5.1}
+\frac{\sigma_q}{\lvert q \rvert}  = \sqrt{\left(\frac{\sigma_x}{\lvert x\rvert}\right)^2+\left(\frac{\sigma_y}{\lvert y\rvert}\right)^2+\left(\frac{\sigma_z}{\lvert z\rvert}\right)^2+...\left(\frac{\sigma_n}{\lvert n\rvert}\right)^2}
 $$
 
 Because the formula for calculating concentrations of a given analyte in an unknown material is just a series of nested quotients and products we can explain the overall uncertainty of a given analyte as:
 
 $$
-\sigma_{C_i} = {C_i}^u \sqrt{ \left( \frac{\sigma_{{C_u}^{n}}}{{C_u}^{n}}\right)^2 + \left( \frac{\sigma_{{C_i}^{std}}}{{C_i}^{std}}\right)^2 + \left( \frac{\sigma_{{C_n}^{std}}}{{C_n}^{std}}\right)^2 + \left({RSE_i}^{std}\right)^2 + \left({RSE_i}^{u}\right)^2} \tag{5.2}
+\sigma_{C_i} = {C_i}^u \sqrt{ \left( \frac{\sigma_{{C_u}^{n}}}{{C_u}^{n}}\right)^2 + \left( \frac{\sigma_{{C_i}^{std}}}{{C_i}^{std}}\right)^2 + \left( \frac{\sigma_{{C_n}^{std}}}{{C_n}^{std}}\right)^2 + \left({RSE_i}^{std}\right)^2 + \left({RSE_i}^{u}\right)^2} \tag{10}
 $$
 
 For analytes where drift correction has been applied, ${RSE_i}^{std}$ is replaced with:
 
 $$
-100\left[\frac{RMSE_i}{\mu_i}\right] \tag{5.3}
+100\left[\frac{RMSE_i}{\mu_i}\right]
 $$
 
 Where $RMSE_i$ is the Root Mean Squared Error as specified in the Drift Correction section.
