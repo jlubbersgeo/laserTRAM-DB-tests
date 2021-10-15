@@ -1,28 +1,21 @@
 ---
 title: "LaserTRAM-DB: A Time Resolved Analysis Module for the complete data reduction pipeline for LA-ICP-MS data"
 date: \today
-author: "Jordan Lubbers"
-bibliography: "bibliography.bib"
+author: "Jordan Lubbers, Adam Kent, Chris Russo"
+bibliography: "paper.bib"
 link-citations: true
 urlcolor: "blue"
 ---
 
-**Jordan Lubbers$^1$, Adam Kent$^1$, Chris Russo$^1$** <br>
-
-$^1$College of Earth, Ocean, and Atmospheric Sciences: Oregon State University
-
 # Summary
 
-LaserTRAM-DB is a dashboard for the complete processing pipeline of Laser Ablation Inductively Coupled Plasma Mass Spectrometry (LA-ICP-MS) data in geologic samples. As LA-ICP-MS data in geologic samples frequently have inclusions within them that do not represent the material being analyzed, user interaction is required to filter them out of the overall ablation signal. LaserTRAM-DB allows the user to filter which portion of the ablation peak is utilized in calculating concentrations, subsequently allowing for more accurate data to be obtained. Furthermore, it allows for the processing of not only individual spot analysis data but a line of spots gathered in rapid succession, reducing the time required for data reduction while still ensuring data quality.
+LaserTRAM-DB is a dashboard for the complete processing pipeline of Laser Ablation Inductively Coupled Plasma Mass Spectrometry (LA-ICP-MS) data in geologic samples. As LA-ICP-MS data in geologic samples frequently have inclusions within them that do not represent the material being analyzed, user interaction is required to filter them out of the overall ablation signal. LaserTRAM-DB allows the user to filter which portion of the ablation peak is utilized in calculating concentrations, subsequently allowing for more accurate data to be obtained. Furthermore, it allows for the processing of not only individual spot analysis data but a line of spots gathered in rapid succession, reducing the time required for data reduction while still ensuring data quality. 
 
 # Statement of Need
 
 Laser ablation inductively coupled plasma mass spectrometry (LA-ICP-MS) is a now a commonplace tool for the gathering of trace element (i.e., < .1 wt%) in the fields of igneous petrology and geochemistry. The last two decades have seen significant advances in both instrument capabilities and operating software allowing users to generate large volumes of in situ geochemical data in comparatively little time to previous methodologies (i.e., micro-drilling) while still maintaining high degrees of accuracy and precision. This has led to researchers generating significantly more trace element data in their projects and, ultimately, tackling questions that can only be answered with larger datasets pushing their fields forward into a more “data-driven” age.
 
 Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations (Figure 1). When integrated over a certain period of time (e.g., the duration of an analysis), a total number of counts for a given analyte per spot analysis can be quantified. This number is a function of many things, but namely: the number of analytes being analyzed, the dwell time of the ICP-MS on each analyte, and the total analysis time. While important to understand the so-called “ins and outs” of LA-ICP-MS, to help maximize the quality of data output from the instrument, they are not requisite for calculating concentrations from raw data. Currently, there are several proprietary and open-source software tools (e.g., SILLS - Guillong et al., 2008; Iolite - Paton et al., 2011; LAtools - Branson et al., 2019; TERMITE - Mischel et al., 2017; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI).
-
-![Figure 1](/raw_data_fig.png)
-*Figure 1: Example of raw data for a single spot analysis from standard reference material BCR-2G showing the possibility of measuring $>$ 25 analytes in a given experiment. The plateau in the middle is the signal that corresponds to the ablated material being measured by the ICP-MS, while the lower cps values on either side are background levels for each analyte.*
 
 # Governing Equations
 
@@ -76,15 +69,12 @@ Because LaserTRAM uses either $^{43}Ca$ or $^{29}Si$ as internal standards our $
 
 ## Drift Correction
 
-To check for drift in calibration standard normalized ratios over time, a linear regression is applied to the calibration standard for each analyte, where the dependent variable is the count rate normalized to the internal standard and the independent variable is the analysis number (Figure 2). This regression and the observed data then receive a Root Mean Squared Error (RMSE)  value. A linear drift correction is applied to an analyte if the relative RMSE value for a given analyte is less than the RSE. Here RSE is defined as:
+To check for drift in calibration standard normalized ratios over time, a linear regression is applied to the calibration standard for each analyte, where the dependent variable is the count rate normalized to the internal standard and the independent variable is the analysis number. This regression and the observed data then receive a Root Mean Squared Error (RMSE)  value. A linear drift correction is applied to an analyte if the relative RMSE value for a given analyte is less than the RSE. Here RSE is defined as:
 
 $$
 {RSE_{i}}^{std} = \left[\frac{\frac{\sigma_i}{\sqrt{n}}}{\mu_i}\right]100 \tag{4.1}
 $$
 Where $\sigma_i$ and $\mu_i$ are the standard deviation and mean of all of the calibration standard normalized ratios respectively and $n_i$ is the total number of calibration standard analyses for analyte ($i$).
-
-![Figure 2](/drift_correction_figure.png)
-*Figure 2: Drift correction test for selected analytes in Figure 1 illustrating analytes that are both drift corrected and not drift corrected in LaserCalc.*
 
 In brief, the only way drift correction happens is if there is a sufficiently large linear change in normalized count rates for the calibration standard over time that causes the RMSE of the regression to have lower values than the standard error of the mean. This drift correction then uses the regression parameters (e.g., slope and intercept) to calculate a normalized count rate for the calibration standard at the point in time where an unknown was analyzed:
 
@@ -127,4 +117,3 @@ Video tutorials on how to use each piece of software can be found at the followi
 We express our gratitude to the W.M. Keck Foundation for helping foster the labarotory environment that led to the genesis of this software.
 
 # References
-
