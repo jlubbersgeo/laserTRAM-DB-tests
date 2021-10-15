@@ -36,7 +36,7 @@ $$
 
 ## Determining Normalized Ratios}
 
-The purpose of LaserTRAM is to give the user complete control over how much of an analysis gets used in calculating concentrations. When a given interval of interest has been chosen, every analyte is normalized to a chosen internal standard. LaserTRAM uses either $^{43}Ca$ or $^{29}Si$ as internal standards for silicate minerals. The raw data first has the background subtracted from it. Background is determined by taking the median counts per second value for each analyte over the specified background range. Once data have been background subtracted, each normalized ratio is calculated the following way:
+The purpose of LaserTRAM is to give the user complete control over how much of an analysis gets used in calculating concentrations. When a given interval of interest has been chosen, every analyte is normalized to a chosen internal standard. LaserTRAM uses either $^{43}Ca$ or $^{29}Si$ as internal standards for silicate minerals. Prior to normalization to an internal standard, raw data first has the background subtracted from it. Background is determined by taking the median counts per second value for each analyte over the specified background range. Once data have been background subtracted, each normalized ratio is calculated the following way:
 
 $$
 N_i = median\left[\frac{cps_{i}}{cps_{is}}\right] \tag{2.1}
@@ -102,6 +102,10 @@ $$
 $$
 
 Where $RMSE_i$ is the Root Mean Squared Error as specified in the Drift Correction section.
+
+# Data Output
+
+Both steps of the data processing pipeline (e.g., LaserTRAM and LaserCalc) allow the user to output progress in the form of an Excel spreadsheet that mimics the application datatable hosted in the web browser. Output follows tidy data format (e.g. [@wickham2014tidy]) where columns contain observation attributes (i.e., analytes values and associated metadata) and rows denote observations (i.e., an individual spot analysis)
 
 # Use
 
