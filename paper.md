@@ -54,7 +54,7 @@ $$
 {C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{\left[\frac{{R_i}^{std}}{{R_n}^{std}}\right]}\frac{{R_i}^u}{{R_{n}}^u} \tag{1.3}
 $$
 
-## Determining Normalized Ratios}
+## Determining Normalized Ratios
 
 The purpose of LaserTRAM is to give the user complete control over how much of an analysis gets used in calculating concentrations. When a given interval of interest has been chosen, every analyte is normalized to a chosen internal standard. LaserTRAM allows for any analyte in the experiment to be used as the internal standard. Prior to normalization to an internal standard, raw data first has the background analyte levels subtracted from it. Background is determined by taking the median counts per second value for each analyte over the specified background range. Once data have been background subtracted, each normalized ratio is calculated the following way:
 
