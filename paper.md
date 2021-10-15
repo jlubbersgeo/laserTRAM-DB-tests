@@ -1,7 +1,26 @@
 ---
 title: "LaserTRAM-DB: A Time Resolved Analysis Module for the complete data reduction pipeline for LA-ICP-MS data"
 date: \today
-author: "Jordan Lubbers, Adam Kent, Chris Russo"
+tags: 
+    - Python
+    - LA-ICP-MS
+    - Geochemistry
+    - Mass Spectrometry
+
+authors:
+    - name: Jordan Lubbers
+    - orcid: 0000-0002-3566-5091
+    - affiliation: 1
+    - name : Adam Kent
+    - affiliation : 1
+    - name : Chris Russo
+    - affiliation : 1
+
+affiliations: 
+    - College of Earth, Ocean, and Atmospheric Sciences, Oregon State University
+    - index : 1
+  
+
 bibliography: "paper.bib"
 ---
 
