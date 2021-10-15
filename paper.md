@@ -18,7 +18,7 @@ authors:
 
 
 affiliations:
-- name: College of Earth, Ocean, and Atmospheric Science, Oregon State University
+- name: College of Earth, Ocean, and Atmospheric Sciences, Oregon State University
   index: 1
 
 
