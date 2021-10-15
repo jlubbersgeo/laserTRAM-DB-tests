@@ -28,7 +28,7 @@ $$
 S = \frac{{R_i}^{std}}{{C_i}^{std}}\left[\frac{{R_{n}}^u}{{R_{n}}^{std}} \frac{{C_{n}}^{std}}{{C_{n}}^{u}} \right]  \tag{1.2}
 $$
 
-${R_i}^{std}$ and ${C_i}^{std}$ are the count rate and and concentration of analyte ($i$) in the calibration standard, ${R_{n}}^u$ and ${R_{n}}^{std}$ are the mean count rates of the internal standard in the unknown material and calibration standard, ${C_{n}}^{u}$ and ${C_{n}}^{std}$ are the concentrations of the internal standard in the unknown material and calibration standard. 
+${R_i}^{std}$ and ${C_i}^{std}$ are the count rate and and concentration of analyte ($i$) in the calibration standard, ${R_{n}}^u$ and ${R_{n}}^{std}$ are the mean count rates of the internal standard in the unknown material and calibration standard, ${C_{n}}^{u}$ and ${C_{n}}^{std}$ are the concentrations of the internal standard in the unknown material and calibration standard.
 
 Kent and Ungerer (2006) re-arrange this relationship such that the count rate expressions always containin unknown analytes in the numerator:
 $$
@@ -57,12 +57,12 @@ $$
 $\sigma_N$ is the standard deviation of a given analyte's normalized ratio for the interval and $n$ is the number of time steps in the interval (i.e., cycles through the mass range). The relative standard error is then:
 
 $$
-{RSE_i}^u = \left[\frac{SE}{N_i}\right]100 \tag{2.4} 
+{RSE_i}^u = \left[\frac{SE}{N_i}\right]100 \tag{2.4}
 $$
 
-Detection limits for each analyte are 3 standard deviations above the mean of the background levels as defined earlier. This then means that you have 99.7\% confidence of that analyte being above background levels. This is standard practice in LA-ICP-MS data reduction. To reflect this in data output, normalized ratios below detection limit are coded to show up as negative ratios in LaserTRAM that then get turned into "b.d.l." values in LaserCalc. 
+Detection limits for each analyte are 3 standard deviations above the mean of the background levels as defined earlier. This then means that you have 99.7\% confidence of that analyte being above background levels. This is standard practice in LA-ICP-MS data reduction. To reflect this in data output, normalized ratios below detection limit are coded to show up as negative ratios in LaserTRAM that then get turned into "b.d.l." values in LaserCalc.
 
-## Concentrations of internal standard in unknown 
+## Concentrations of internal standard in unknown
 
 Because LaserTRAM uses either $^{43}Ca$ or $^{29}Si$ as internal standards our ${C_n}^u$  will be either wt\% oxide of $CaO$ or $SiO_2$, respectively. For this part, we utilize user interaction in LaserCalc to input concentrations of the internal standard and its relative uncertainty (e.g., 1\%).
 
@@ -71,18 +71,17 @@ Because LaserTRAM uses either $^{43}Ca$ or $^{29}Si$ as internal standards our $
 To check for drift in calibration standard normalized ratios over time, a linear regression is applied to the calibration standard for each analyte, where the dependent variable is the count rate normalized to the internal standard and the independent variable is the analysis number (Figure 2). This regression and the observed data then receive a Root Mean Squared Error (RMSE)  value. A linear drift correction is applied to an analyte if the relative RMSE value for a given analyte is less than the RSE. Here RSE is defined as:
 
 $$
-{RSE_{i}}^{std} = \left[\frac{\frac{\sigma_i}{\sqrt{n}}}{\mu_i}\right]100 \tag{4.1} 
+{RSE_{i}}^{std} = \left[\frac{\frac{\sigma_i}{\sqrt{n}}}{\mu_i}\right]100 \tag{4.1}
 $$
 Where $\sigma_i$ and $\mu_i$ are the standard deviation and mean of all of the calibration standard normalized ratios respectively and $n_i$ is the total number of calibration standard analyses for analyte ($i$).
 
 ![Figure 2](/drift_correction_figure.png)
 *Figure 2: Drift correction test for selected analytes in Figure 1 illustrating analytes that are both drift corrected and not drift corrected in LaserCalc.*
 
-
-In brief, the only way drift correction happens is if there is a sufficiently large linear change in normalized count rates for the calibration standard over time that causes the RMSE of the regression to have lower values than the standard error of the mean. This drift correction then uses the regression parameters (e.g., slope and intercept) to calculate a normalized count rate for the calibration standard at the point in time where an unknown was analyzed: 
+In brief, the only way drift correction happens is if there is a sufficiently large linear change in normalized count rates for the calibration standard over time that causes the RMSE of the regression to have lower values than the standard error of the mean. This drift correction then uses the regression parameters (e.g., slope and intercept) to calculate a normalized count rate for the calibration standard at the point in time where an unknown was analyzed:
 
 $$
- {C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{\left[m_ix +b_i\right]}{N_i}^u \tag{4.1} 
+ {C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{\left[m_ix +b_i\right]}{N_i}^u \tag{4.1}
 $$
 
 where $m$ is the regression slope, $x$ is the analysis number, and $b$ is the intercept for analyte $i$.
@@ -97,9 +96,8 @@ $$
 Because the formula for calculating concentrations of a given analyte in an unknown material is just a series of nested quotients and products we can explain the overall uncertainty of a given analyte as:
 
 $$
-\sigma_{C_i} = {C_i}^u \sqrt{ \left( \frac{\sigma_{{C_u}^{n}}}{{C_u}^{n}}\right)^2 + \left( \frac{\sigma_{{C_i}^{std}}}{{C_i}^{std}}\right)^2 + \left( \frac{\sigma_{{C_n}^{std}}}{{C_n}^{std}}\right)^2 + \left({RSE_i}^{std}\right)^2 + \left({RSE_i}^{u}\right)^2} \tag{5.2} 
+\sigma_{C_i} = {C_i}^u \sqrt{ \left( \frac{\sigma_{{C_u}^{n}}}{{C_u}^{n}}\right)^2 + \left( \frac{\sigma_{{C_i}^{std}}}{{C_i}^{std}}\right)^2 + \left( \frac{\sigma_{{C_n}^{std}}}{{C_n}^{std}}\right)^2 + \left({RSE_i}^{std}\right)^2 + \left({RSE_i}^{u}\right)^2} \tag{5.2}
 $$
-
 
 For analytes where drift correction has been applied, ${RSE_i}^{std}$ is replaced with:
 
@@ -110,18 +108,14 @@ $$
 Where $RMSE_i$ is the Root Mean Squared Error as specified in the Drift Correction section.
 
 # Use
+
 Video tutorials on how to use each piece of software can be found at the following links:
 
 - LaserTRAM: [https://www.youtube.com/watch?v=ALVzTdMnS-k&t=338s&ab_channel=JordanLubbers](https://www.youtube.com/watch?v=ALVzTdMnS-k&t=338s&ab_channel=JordanLubbers)
 - LaserCalc: [https://www.youtube.com/watch?v=vWmwE5XO5l0&t=1s&ab_channel=JordanLubbers](https://www.youtube.com/watch?v=vWmwE5XO5l0&t=1s&ab_channel=JordanLubbers)
-
-
 
 # Acknowledgements
 
 We express our gratitude to the W.M. Keck Foundation for helping foster the labarotory environment that led to the genesis of this software.
 
 # References
-
-
-
