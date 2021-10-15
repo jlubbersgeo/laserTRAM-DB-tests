@@ -33,11 +33,11 @@ LaserTRAM-DB is a dashboard for the complete processing pipeline of Laser Ablati
 
 Laser ablation inductively coupled plasma mass spectrometry (LA-ICP-MS) is a now a commonplace tool for the gathering of *in situ* trace element (i.e., < .1 wt%) data in the fields of igneous petrology and geochemistry. The last two decades have seen significant advances in both instrument capabilities and operating software, allowing users to generate large volumes of in situ geochemical data in comparatively little time to previous methodologies (i.e., micro-drilling) while still maintaining high degrees of accuracy and precision. This has led to researchers generating significantly more trace element data in their projects and, ultimately, tackling questions that can only be answered with larger datasets pushing their fields forward into a more “data-driven” age.
 
-Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations. In order to be converted into concentrations, a modest amount user input is required. Currently, there are several proprietary and open-source softwares (e.g., SILLS - [@guillong2008appendix]; Iolite - [@paton2011iolite]; LAtools - [@branson2019latools]; TERMITE - [@mischel2017termite]; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction to accomplish this task. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI).
+Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations. In order to be converted into concentrations, a modest amount user input is required. Currently, there are several proprietary and open-source softwares (e.g., SILLS - @guillong2008appendix; Iolite - @paton2011iolite; LAtools - @branson2019latools; TERMITE - @mischel2017termite; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction to accomplish this task. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI).
 
 # Governing Equations
 
-We calculate the concentration of analyte ($i$) in an unknown material ($u$) using the following relationship from  [@longerich1996inter]:
+We calculate the concentration of analyte ($i$) in an unknown material ($u$) using the following relationship from  @longerich1996inter:
 $$
 {C_i}^u = \frac{{R_i}^u}{S} \tag{1.1}
 $$
@@ -49,7 +49,7 @@ $$
 
 ${R_i}^{std}$ and ${C_i}^{std}$ are the count rate and and concentration of analyte ($i$) in the calibration standard, ${R_{n}}^u$ and ${R_{n}}^{std}$ are the mean count rates of the internal standard in the unknown material and calibration standard, ${C_{n}}^{u}$ and ${C_{n}}^{std}$ are the concentrations of the internal standard in the unknown material and calibration standard.
 
-[@kent2006analysis] re-arrange this relationship such that the count rate expressions always containin unknown analytes in the numerator:
+@kent2006analysis re-arrange this relationship such that the count rate expressions always containin unknown analytes in the numerator:
 $$
 {C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{\left[\frac{{R_i}^{std}}{{R_n}^{std}}\right]}\frac{{R_i}^u}{{R_{n}}^u} \tag{1.3}
 $$
@@ -104,7 +104,7 @@ where $m$ is the regression slope, $x$ is the analysis number, and $b$ is the in
 
 ## Uncertainties
 
-Uncertainties in calculated concentrations are calculated according to standard error propagation of uncertainties in products and quotients [@taylor1997introduction] p.61:
+Uncertainties in calculated concentrations are calculated according to standard error propagation of uncertainties in products and quotients @taylor1997introduction p.61:
 $$
 \frac{\sigma_q}{\lvert q \rvert}  = \sqrt{\left(\frac{\sigma_x}{\lvert x\rvert}\right)^2+\left(\frac{\sigma_y}{\lvert y\rvert}\right)^2+\left(\frac{\sigma_z}{\lvert z\rvert}\right)^2+...\left(\frac{\sigma_n}{\lvert n\rvert}\right)^2} \tag{5.1}
 $$
@@ -125,7 +125,7 @@ Where $RMSE_i$ is the Root Mean Squared Error as specified in the Drift Correcti
 
 # Data Output
 
-Both steps of the data processing pipeline (e.g., LaserTRAM and LaserCalc) allow the user to output progress in the form of an Excel spreadsheet that mimics the application datatable hosted in the web browser. Output follows tidy data format (e.g. [@wickham2014tidy]) where columns contain observation attributes (i.e., analytes values and associated metadata) and rows denote observations (i.e., an individual spot analysis)
+Both steps of the data processing pipeline (e.g., LaserTRAM and LaserCalc) allow the user to output progress in the form of an Excel spreadsheet that mimics the application datatable hosted in the web browser. Output follows tidy data format (e.g. @wickham2014tidy) where columns contain observation attributes (i.e., analytes values and associated metadata) and rows denote observations (i.e., an individual spot analysis)
 
 # Use
 
