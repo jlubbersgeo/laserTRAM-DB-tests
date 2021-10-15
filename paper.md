@@ -35,7 +35,7 @@ Laser ablation inductively coupled plasma mass spectrometry (LA-ICP-MS) is a now
 
 Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations. In order to be converted into accurate concentrations, a modest amount of user input is required and should not be automated. Currently, there are several proprietary and open-source softwares (e.g., SILLS - @guillong2008appendix; Iolite - @paton2011iolite; LAtools - @branson2019latools; TERMITE - @mischel2017termite; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction to accomplish this task. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI) e.g., \autoref{lasertram_gui}. Built primarily using Plotly-Dash [Plotly Technologies @plotly], Numpy [@harris2020array], and pandas [@mckinney2010data], we present a completely open-source dashboard: Laser Time Resolved Analysis Module Dashboard (LaserTRAM-DB) that allows the user to calculate concentrations from raw LA-ICP-MS data with the flexibility of a GUI interface while maintaining the performance of the numerical python ecosystem. It is comprised of three parts:
 
-1. **LaserTRAM:** Choosing an interval of interest from raw cps data in individual spot analyses and normalizing it to an internal. standard
+1. **LaserTRAM:** Choosing an interval of interest from raw cps data in individual spot analyses and normalizing it to an internal standard.
 
 2. **LaserTRAM profiler:** Functionally the same as LaserTRAM, however has tools that allow for the rapid inspection of a line of spot analyses gathered in quick succession.
 
