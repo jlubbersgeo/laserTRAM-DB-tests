@@ -1,3 +1,9 @@
+---
+title: "LaserTRAM-DB_paper"
+output: pdf_document
+bibliography: bibliography.bib
+---
+
 # LaserTRAM-DB: A Time Resolved Analysis Module for the complete data reduction pipeline for LA-ICP-MS data
 
 **Jordan Lubbers$^1$, Adam Kent$^1$, Chris Russo$^1$** <br>
@@ -18,7 +24,7 @@ Raw data output from LA-ICP-MS, however, is in the form of counts per second (cp
 
 # Governing Equations
 
-We calculate the concentration of analyte ($i$) in an unknown material ($u$) using the following relationship from  \cite{longerich1996inter}:
+We calculate the concentration of analyte ($i$) in an unknown material ($u$) using the following relationship from  Longerich and others (1996):
 $$
 {C_i}^u = \frac{{R_i}^u}{S} \tag{1.1}
 $$
@@ -30,7 +36,7 @@ $$
 
 ${R_i}^{std}$ and ${C_i}^{std}$ are the count rate and and concentration of analyte ($i$) in the calibration standard, ${R_{n}}^u$ and ${R_{n}}^{std}$ are the mean count rates of the internal standard in the unknown material and calibration standard, ${C_{n}}^{u}$ and ${C_{n}}^{std}$ are the concentrations of the internal standard in the unknown material and calibration standard. 
 
-\cite{kent2006analysis} re-arrange this relationship such that the count rate expressions always containin unknown analytes in the numerator:
+Kent and Ungerer (2006) re-arrange this relationship such that the count rate expressions always containin unknown analytes in the numerator:
 $$
 {C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{\left[\frac{{R_i}^{std}}{{R_n}^{std}}\right]}\frac{{R_i}^u}{{R_{n}}^u} \tag{1.3}
 $$
@@ -89,7 +95,7 @@ where $m$ is the regression slope, $x$ is the analysis number, and $b$ is the in
 
 ## Uncertainties
 
-Uncertainties in calculated concentrations are calculated according to standard error propagation of uncertainties in products and quotients \cite{taylor1997introduction} p.61:
+Uncertainties in calculated concentrations are calculated according to standard error propagation of uncertainties in products and quotients Taylor (1997) p.61:
 $$
 \frac{\sigma_q}{\lvert q \rvert}  = \sqrt{\left(\frac{\sigma_x}{\lvert x\rvert}\right)^2+\left(\frac{\sigma_y}{\lvert y\rvert}\right)^2+\left(\frac{\sigma_z}{\lvert z\rvert}\right)^2+...\left(\frac{\sigma_n}{\lvert n\rvert}\right)^2} \tag{5.1}
 $$
@@ -107,10 +113,20 @@ $$
 100\left[\frac{RMSE_i}{\mu_i}\right] \tag{5.3}
 $$
 
-Where $RMSE_i$ is the Root Mean Squared Error as specified in Section \ref{drift correction}.
+Where $RMSE_i$ is the Root Mean Squared Error as specified in the Drift Correction section.
 
 # Use
+Video tutorials on how to use each piece of software can be found at the following links:
+
+- LaserTRAM: [https://www.youtube.com/watch?v=ALVzTdMnS-k&t=338s&ab_channel=JordanLubbers](https://www.youtube.com/watch?v=ALVzTdMnS-k&t=338s&ab_channel=JordanLubbers)
+- LaserCalc: [https://www.youtube.com/watch?v=vWmwE5XO5l0&t=1s&ab_channel=JordanLubbers](https://www.youtube.com/watch?v=vWmwE5XO5l0&t=1s&ab_channel=JordanLubbers)
+
+
 
 # Acknowledgements
 
+We express our gratitude to the W.M. Keck Foundation for helping foster the labarotory environment that led to the genesis of this software.
+
 # References
+
+
