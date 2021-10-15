@@ -1,9 +1,3 @@
----
-title: "LaserTRAM-DB_paper"
-output: pdf_document
-bibliography: bibliography.bib
----
-
 # LaserTRAM-DB: A Time Resolved Analysis Module for the complete data reduction pipeline for LA-ICP-MS data
 
 **Jordan Lubbers$^1$, Adam Kent$^1$, Chris Russo$^1$** <br>
@@ -128,5 +122,6 @@ Video tutorials on how to use each piece of software can be found at the followi
 We express our gratitude to the W.M. Keck Foundation for helping foster the labarotory environment that led to the genesis of this software.
 
 # References
+
 
 
