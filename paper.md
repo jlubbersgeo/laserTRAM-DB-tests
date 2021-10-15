@@ -99,7 +99,6 @@ Where $\sigma_i$ and $\mu_i$ are the standard deviation and mean of all of the c
 
 ![Drift correction test for selected analytes in \autoref{fig:rawdata} illustrating analytes that are both drift corrected and not drift corrected in LaserCalc. \label{drift_correct}](drift_correction_figure.png)
 
-
 In brief, the only way drift correction happens is if there is a sufficiently large linear change in normalized count rates for the calibration standard over time that causes the RMSE of the regression to have lower values than the standard error of the mean (\autoref{fig:drift_correct}). This drift correction then uses the regression parameters (e.g., slope and intercept) to calculate a normalized count rate for the calibration standard at the point in time where an unknown was analyzed:
 
 $$
