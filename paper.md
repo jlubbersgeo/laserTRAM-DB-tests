@@ -27,13 +27,13 @@ bibliography: "paper.bib"
 
 # Summary
 
-LaserTRAM-DB is a dashboard for the complete processing pipeline of Laser Ablation Inductively Coupled Plasma Mass Spectrometry (LA-ICP-MS) data in geologic samples. As LA-ICP-MS data in geologic samples frequently have inclusions within them that do not represent the material being analyzed, user interaction is required to filter them out of the overall ablation signal. LaserTRAM-DB allows the user to filter which portion of the ablation peak is utilized in calculating concentrations, subsequently allowing for more accurate data to be obtained. Furthermore, it allows for the processing of not only individual spot analysis data but a line of spots gathered in rapid succession, reducing the time required for data reduction while still ensuring data quality.
+LaserTRAM-DB is a dashboard for the complete processing pipeline of Laser Ablation Inductively Coupled Plasma Mass Spectrometry (LA-ICP-MS) data in geologic samples. As LA-ICP-MS data in geologic samples frequently have inclusions within them that do not represent the material of interest, user interaction is required to filter them out of the overall ablation signal. LaserTRAM-DB allows the user to filter which portion of the ablation peak is utilized in calculating concentrations, subsequently allowing for more accurate data to be obtained. Furthermore, it allows for the processing of not only individual spot analysis data but a line of spots gathered in rapid succession, reducing the time required for data reduction while still ensuring data quality.
 
 # Statement of Need
 
-Laser ablation inductively coupled plasma mass spectrometry (LA-ICP-MS) is a now a commonplace tool for the gathering of trace element (i.e., < .1 wt%) in the fields of igneous petrology and geochemistry. The last two decades have seen significant advances in both instrument capabilities and operating software allowing users to generate large volumes of in situ geochemical data in comparatively little time to previous methodologies (i.e., micro-drilling) while still maintaining high degrees of accuracy and precision. This has led to researchers generating significantly more trace element data in their projects and, ultimately, tackling questions that can only be answered with larger datasets pushing their fields forward into a more “data-driven” age.
+Laser ablation inductively coupled plasma mass spectrometry (LA-ICP-MS) is a now a commonplace tool for the gathering of *in situ* trace element (i.e., < .1 wt%) data in the fields of igneous petrology and geochemistry. The last two decades have seen significant advances in both instrument capabilities and operating software, allowing users to generate large volumes of in situ geochemical data in comparatively little time to previous methodologies (i.e., micro-drilling) while still maintaining high degrees of accuracy and precision. This has led to researchers generating significantly more trace element data in their projects and, ultimately, tackling questions that can only be answered with larger datasets pushing their fields forward into a more “data-driven” age.
 
-Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations. In order to be converted into concentrations user input is required. Currently, there are several proprietary and open-source software tools (e.g., SILLS - [@guillong2008appendix]; Iolite - [@paton2011iolite]; LAtools - [@branson2019latools]; TERMITE - [@mischel2017termite]; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction to accomplish this task. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI).
+Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations. In order to be converted into concentrations, a modest amount user input is required. Currently, there are several proprietary and open-source softwares (e.g., SILLS - [@guillong2008appendix]; Iolite - [@paton2011iolite]; LAtools - [@branson2019latools]; TERMITE - [@mischel2017termite]; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction to accomplish this task. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI).
 
 # Governing Equations
 
@@ -56,7 +56,7 @@ $$
 
 ## Determining Normalized Ratios}
 
-The purpose of LaserTRAM is to give the user complete control over how much of an analysis gets used in calculating concentrations. When a given interval of interest has been chosen, every analyte is normalized to a chosen internal standard. LaserTRAM uses either $^{43}Ca$ or $^{29}Si$ as internal standards for silicate minerals. Prior to normalization to an internal standard, raw data first has the background subtracted from it. Background is determined by taking the median counts per second value for each analyte over the specified background range. Once data have been background subtracted, each normalized ratio is calculated the following way:
+The purpose of LaserTRAM is to give the user complete control over how much of an analysis gets used in calculating concentrations. When a given interval of interest has been chosen, every analyte is normalized to a chosen internal standard. LaserTRAM allows for any analyte in the experiment to be used as the internal standard. Prior to normalization to an internal standard, raw data first has the background analyte levels subtracted from it. Background is determined by taking the median counts per second value for each analyte over the specified background range. Once data have been background subtracted, each normalized ratio is calculated the following way:
 
 $$
 N_i = median\left[\frac{cps_{i}}{cps_{is}}\right] \tag{2.1}
@@ -83,7 +83,7 @@ Detection limits for each analyte are 3 standard deviations above the mean of th
 
 ## Concentrations of internal standard in unknown
 
-Because LaserTRAM uses either $^{43}Ca$ or $^{29}Si$ as internal standards our ${C_n}^u$  will be either wt\% oxide of $CaO$ or $SiO_2$, respectively. For this part, we utilize user interaction in LaserCalc to input concentrations of the internal standard and its relative uncertainty (e.g., 1\%).
+To calculate concentrations of a given analyte list in an unknown sample, the concentration of the internal standard must be known. LaserCalc takes these concentrations in the form of wt\% oxide and utilizes user interaction to input concentrations of the internal standard and its relative uncertainty (e.g., 1\%).
 
 ## Drift Correction
 
