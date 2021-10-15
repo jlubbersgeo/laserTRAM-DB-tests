@@ -90,7 +90,7 @@ To calculate concentrations of a given analyte list in an unknown sample, the co
 
 ## Drift Correction
 
-To check for drift in calibration standard normalized ratios over time, a linear regression is applied to the calibration standard for each analyte, where the dependent variable is the count rate normalized to the internal standard and the independent variable is the analysis number. This regression and the observed data then receive a Root Mean Squared Error (RMSE)  value (\autoref{fig:drift_correct}). A linear drift correction is applied to an analyte if the relative RMSE value for a given analyte is less than the RSE. Here RSE is defined as:
+To check for drift in calibration standard normalized ratios over time, a linear regression is applied to the calibration standard for each analyte, where the dependent variable is the count rate normalized to the internal standard and the independent variable is the analysis number. This regression and the observed data then receive a Root Mean Squared Error (RMSE)  value. A linear drift correction is applied to an analyte if the relative RMSE value for a given analyte is less than the RSE. Here RSE is defined as:
 
 $$
 {RSE_{i}}^{std} = \left[\frac{\frac{\sigma_i}{\sqrt{n}}}{\mu_i}\right]100 \tag{4.1}
@@ -100,7 +100,7 @@ Where $\sigma_i$ and $\mu_i$ are the standard deviation and mean of all of the c
 ![Drift correction test for selected analytes in \autoref{fig:rawdata} illustrating analytes that are both drift corrected and not drift corrected in LaserCalc. \label{drift_correct}](drift_correction_figure.png)
 
 
-In brief, the only way drift correction happens is if there is a sufficiently large linear change in normalized count rates for the calibration standard over time that causes the RMSE of the regression to have lower values than the standard error of the mean. This drift correction then uses the regression parameters (e.g., slope and intercept) to calculate a normalized count rate for the calibration standard at the point in time where an unknown was analyzed:
+In brief, the only way drift correction happens is if there is a sufficiently large linear change in normalized count rates for the calibration standard over time that causes the RMSE of the regression to have lower values than the standard error of the mean (\autoref{fig:drift_correct}). This drift correction then uses the regression parameters (e.g., slope and intercept) to calculate a normalized count rate for the calibration standard at the point in time where an unknown was analyzed:
 
 $$
  {C_i}^u = {C_n}^u \frac{\left[\frac{{C_i}^{std}}{{C_n}^{std}}\right]}{\left[m_ix +b_i\right]}{N_i}^u \tag{4.1}
