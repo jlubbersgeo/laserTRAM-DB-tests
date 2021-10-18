@@ -967,46 +967,68 @@ def plot(spot, stored_data, interval_slider, int_std, filename):
             int_start_idx = np.where(df["Time"] > interval_slider[2])[0][0]
             int_stop_idx = np.where(df["Time"] > interval_slider[3])[0][0]
             
-            #get background cps values
-            bkgd_data = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].median()
+            # #get background cps values
+            # bkgd_data = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].median()
             
-            # detection limits are 3 std dev from bkground signal
-            detection_limits = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].std() * 3
+            # # detection limits are 3 std dev from bkground signal
+            # detection_limits = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].std() * 3
             
-            # subtract background cps from signal
-            bkgd_correct_data = (
-                df.iloc[int_start_idx:int_stop_idx, :]
-                .drop("Time", axis="columns")
-                .subtract(bkgd_data, axis="columns")
-            )
-            #normalize bkgd corrected data to internal standard
-            bkgd_correct_normal_data = bkgd_correct_data.divide(
-                bkgd_correct_data[int_std], axis="rows"
-            )
+            # # subtract background cps from signal
+            # bkgd_correct_data = (
+            #     df.iloc[int_start_idx:int_stop_idx, :]
+            #     .drop("Time", axis="columns")
+            #     .subtract(bkgd_data, axis="columns")
+            # )
+            # #normalize bkgd corrected data to internal standard
+            # bkgd_correct_normal_data = bkgd_correct_data.divide(
+            #     bkgd_correct_data[int_std], axis="rows"
+            # )
 
-            # median background corrected normalized data
-            bkgd_correct_med = bkgd_correct_normal_data[:].median()
+            # # median background corrected normalized data
+            # bkgd_correct_med = bkgd_correct_normal_data[:].median()
             
-            #if below median cps values below detection limit, set normalized
-            # ratio to -9999. Use this to filter for below detection limit later
-            # do the same thing with 0
-            bkgd_correct_med.where(bkgd_correct_data.median() != 0, -9999, inplace=True)
-            bkgd_correct_med.where(
-                bkgd_correct_data.median() >= detection_limits, -9999, inplace=True
-            )
+            # #if below median cps values below detection limit, set normalized
+            # # ratio to -9999. Use this to filter for below detection limit later
+            # # do the same thing with 0
+            # bkgd_correct_med.where(bkgd_correct_data.median() != 0, -9999, inplace=True)
+            # bkgd_correct_med.where(
+            #     bkgd_correct_data.median() >= detection_limits, -9999, inplace=True
+            # )
             
 
 
-            # std error calculation on normalized ratio for interval
-            se = bkgd_correct_normal_data.std() / np.sqrt(
-                abs(int_stop_idx - int_start_idx)
-            )
+            # # std error calculation on normalized ratio for interval
+            # se = bkgd_correct_normal_data.std() / np.sqrt(
+            #     abs(int_stop_idx - int_start_idx)
+            # )
 
-            # relative std error calculation
-            rel_se = 100 * (se / bkgd_correct_med)
+            # # relative std error calculation
+            # rel_se = 100 * (se / bkgd_correct_med)
             
-            # add time column back in for plotting
-            bkgd_correct_normal_data["Time"] = df.iloc[int_start_idx:int_stop_idx, 0]
+            # # add time column back in for plotting
+            # bkgd_correct_normal_data["Time"] = df.iloc[int_start_idx:int_stop_idx, 0]
+            
+            
+            
+    
+            for e,i in zip(elements,range(len(elements))):
+                if e == int_std:
+                    break
+            int_std_loc = i
+                    
+            df_n = df.to_numpy()
+            # int_std_loc = [elements.index(i) for i in elements if int_std in i]
+            bkgd_data = np.median(df_n[bkgd_start_idx:bkgd_stop_idx,1:],axis = 0)
+            detection_limits = np.std(df_n[bkgd_start_idx:bkgd_stop_idx,1:],axis = 0)*3
+            bkgd_correct_data = df_n[int_start_idx:int_stop_idx,1:] - bkgd_data[int_std_loc]
+            bkgd_correct_normal_data = bkgd_correct_data / bkgd_correct_data[:,int_std_loc][:,None]
+            bkgd_correct_med = np.median(bkgd_correct_normal_data,axis = 0)
+            bkgd_correct_med[np.median(bkgd_correct_data,axis = 0) <= detection_limits] = -9999
+            bkgd_correct_med[np.median(bkgd_correct_data,axis = 0) == 0 ] = -9999
+            se = bkgd_correct_normal_data.std(axis = 0) / np.sqrt(abs(int_stop_idx - int_start_idx))
+            rel_se = 100* (se / bkgd_correct_med)
+            bkgd_correct_normal_data = pd.DataFrame(bkgd_correct_normal_data,columns = elements)
+            bkgd_correct_normal_data['Time'] = df_n[int_start_idx:int_stop_idx,0]
 
             # make the plots
             fig = make_subplots(
@@ -1173,36 +1195,56 @@ def add_row(
                 int_start_idx = np.where(df["Time"] > interval_slider[2])[0][0]
                 int_stop_idx = np.where(df["Time"] > interval_slider[3])[0][0]
 
-                bkgd_data = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].median()
+                # bkgd_data = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].median()
 
-                detection_limits = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].std() * 3
+                # detection_limits = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].std() * 3
 
-                bkgd_correct_data = (
-                    df.iloc[int_start_idx:int_stop_idx, :]
-                    .drop("Time", axis="columns")
-                    .subtract(bkgd_data, axis="columns")
-                )
+                # bkgd_correct_data = (
+                #     df.iloc[int_start_idx:int_stop_idx, :]
+                #     .drop("Time", axis="columns")
+                #     .subtract(bkgd_data, axis="columns")
+                # )
 
-                bkgd_correct_normal_data = bkgd_correct_data.divide(
-                    bkgd_correct_data[int_std], axis="rows"
-                )
+                # bkgd_correct_normal_data = bkgd_correct_data.divide(
+                #     bkgd_correct_data[int_std], axis="rows"
+                # )
 
-                # median background corrected counts per second
-                bkgd_correct_med = bkgd_correct_normal_data[:].median()
+                # # median background corrected counts per second
+                # bkgd_correct_med = bkgd_correct_normal_data[:].median()
 
-                bkgd_correct_med.where(
-                bkgd_correct_data.median() >= detection_limits, -9999, inplace=True
-                )
-                # do the same thing with 0
-                bkgd_correct_med.where(bkgd_correct_data.median() != 0, -9999, inplace=True)
+                # bkgd_correct_med.where(
+                # bkgd_correct_data.median() >= detection_limits, -9999, inplace=True
+                # )
+                # # do the same thing with 0
+                # bkgd_correct_med.where(bkgd_correct_data.median() != 0, -9999, inplace=True)
 
-                # std error calculation on normalized ratio for interval
-                se = bkgd_correct_normal_data.std() / np.sqrt(
-                    abs(int_stop_idx - int_start_idx)
-                )
+                # # std error calculation on normalized ratio for interval
+                # se = bkgd_correct_normal_data.std() / np.sqrt(
+                #     abs(int_stop_idx - int_start_idx)
+                # )
 
-                # relative std error calculation
-                rel_se = 100 * (se / bkgd_correct_med)
+                # # relative std error calculation
+                # rel_se = 100 * (se / bkgd_correct_med)
+                elements = df.iloc[:, 1:].columns.tolist()
+
+                for e,i in zip(elements,range(len(elements))):
+                    if e == int_std:
+                        break
+                int_std_loc = i
+                        
+                df_n = df.to_numpy()
+                # int_std_loc = [elements.index(i) for i in elements if int_std in i]
+                bkgd_data = np.median(df_n[bkgd_start_idx:bkgd_stop_idx,1:],axis = 0)
+                detection_limits = np.std(df_n[bkgd_start_idx:bkgd_stop_idx,1:],axis = 0)*3
+                bkgd_correct_data = df_n[int_start_idx:int_stop_idx,1:] - bkgd_data[int_std_loc]
+                bkgd_correct_normal_data = bkgd_correct_data / bkgd_correct_data[:,int_std_loc][:,None]
+                bkgd_correct_med = np.median(bkgd_correct_normal_data,axis = 0)
+                bkgd_correct_med[np.median(bkgd_correct_data,axis = 0) <= detection_limits] = -9999
+                bkgd_correct_med[np.median(bkgd_correct_data,axis = 0) == 0 ] = -9999
+                se = bkgd_correct_normal_data.std(axis = 0) / np.sqrt(abs(int_stop_idx - int_start_idx))
+                rel_se = 100* (se / bkgd_correct_med)
+                bkgd_correct_normal_data = pd.DataFrame(bkgd_correct_normal_data,columns = elements)
+                bkgd_correct_normal_data['Time'] = df_n[int_start_idx:int_stop_idx,0]
                 
                 # inserting all the metadata about bkgd and interval
                 # start and stop times as well as the int std cps value
@@ -1213,7 +1255,7 @@ def add_row(
                 row_data.insert(3, df["Time"][int_start_idx])
                 row_data.insert(4, df["Time"][int_stop_idx])
                 row_data.insert(5, int_std)
-                row_data.insert(6, np.median(bkgd_correct_data[int_std]))
+                row_data.insert(6, np.median(bkgd_correct_data[int_std_loc]))
 
                 rows.append({c["id"]: r for c, r in zip(columns, row_data)})
 
