@@ -1,5 +1,5 @@
 ---
-title: "LaserTRAM-DB: A Time Resolved Analysis Module for the complete data reduction pipeline for LA-ICP-MS data"
+title: "LaserTRAM-DB: A Time Resolved Analysis Module for the complete reduction of laser ablation inductively coupled mass spectrometry data"
 date: \today
 tags: 
     - Python
@@ -11,14 +11,15 @@ authors:
  - name: Jordan Lubbers
    orcid: 0000-0002-3566-5091
    affiliation: 1
- - name: Adam Kent
+ - name: Adam J.R. Kent
+   orcid: 0000-0003-3564-6285
    affiliation: 1
  - name: Chris Russo
    affiliation: 1
 
 
 affiliations:
-- name: College of Earth, Ocean, and Atmospheric Sciences, Oregon State University
+- name: College of Earth, Ocean, and Atmospheric Sciences, Oregon State University, Corvallis OR 97330
   index: 1
 
 
@@ -27,13 +28,13 @@ bibliography: "paper.bib"
 
 # Summary
 
-LaserTRAM-DB is a dashboard for the complete processing pipeline of Laser Ablation Inductively Coupled Plasma Mass Spectrometry (LA-ICP-MS) data in geologic samples. As LA-ICP-MS data in geologic samples frequently have inclusions within them that do not represent the material of interest, user interaction is required to filter them out of the overall ablation signal. LaserTRAM-DB allows the user to filter which portion of the ablation peak is utilized in calculating concentrations, subsequently allowing for more accurate data to be obtained. Furthermore, it allows for the processing of not only individual spot analysis data but a line of spots gathered in rapid succession, reducing the time required for data reduction while still ensuring data quality.
+LaserTRAM-DB is a dashboard for the complete processing pipeline of Laser Ablation Inductively Coupled Plasma Mass Spectrometry (LA-ICP-MS) data in geologic samples. As LA-ICP-MS data in geologic samples frequently have inclusions and other complex materials within them that do not represent the material of interest, user interaction is required to filter them out of the overall ablation signal. LaserTRAM-DB allows the user to filter which portion of the ablation peak is utilized in calculating concentrations, subsequently allowing for more accurate data to be obtained. Furthermore, it allows for the processing of both individual spot analysis data and a line of spots gathered in rapid succession, reducing the time required for data reduction while still ensuring data quality.
 
 # Statement of Need
 
-Laser ablation inductively coupled plasma mass spectrometry (LA-ICP-MS) is a now a commonplace tool for the gathering of *in situ* trace element (i.e., < .1 wt%) data in the fields of igneous petrology and geochemistry. The last two decades have seen significant advances in both instrument capabilities and operating software, allowing users to generate large volumes of *in situ* geochemical data in comparatively little time to previous methodologies (i.e., micro-drilling) while still maintaining high degrees of accuracy and precision. This has led to researchers generating significantly more trace element data in their projects and, ultimately, tackling questions that can only be answered with larger datasets pushing their fields forward into a more “data-driven” age.
+With a wide array of applications [e.g., @caricchi2020data, @fritz2021preferential, @loewen2012sources, @lukacs2021zircon], laser ablation inductively coupled plasma mass spectrometry (LA-ICP-MS) is a now a commonplace tool for the gathering of *in situ* trace element (i.e., < 0.1 wt%) data from solid materials in the natural sciences. The last two decades have seen significant advances in both instrument capabilities and operating software, allowing users to generate large volumes of *in situ* geochemical data in comparatively little time to previous methodologies (i.e., micro-drilling) while still maintaining high degrees of accuracy and precision.
 
-Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations. In order to be converted into accurate concentrations, a modest amount of user input is required and should not be automated. Currently, there are several proprietary and open-source softwares (e.g., SILLS - @guillong2008appendix; Iolite - @paton2011iolite; LAtools - @branson2019latools; TERMITE - @mischel2017termite; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction to accomplish this task. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI) e.g., \autoref{lasertram_gui}. Built primarily using Plotly-Dash [Plotly Technologies @plotly], Numpy [@harris2020array], and pandas [@mckinney2010data], we present a completely open-source dashboard: Laser Time Resolved Analysis Module Dashboard (LaserTRAM-DB) that allows the user to calculate concentrations from raw LA-ICP-MS data with the flexibility of a GUI interface while maintaining the performance of the numerical python ecosystem. It is comprised of three parts:
+Raw data output from LA-ICP-MS, however, is in the form of counts per second (cps), not elemental concentrations. In order to be converted into accurate concentrations, a modest amount of user input is required and should not be automated. Currently, there are several proprietary and open-source softwares (e.g., SILLS - @guillong2008appendix; Iolite - @paton2011iolite; LAtools - @branson2019latools; TERMITE - @mischel2017termite; GLITTER) and countless other “in house” spreadsheet-based tools for LA-ICP-MS data reduction to accomplish this task. All have their strengths and weaknesses, however, there is yet to be a powerful, web-hosted Graphical User Interface (GUI) e.g., \autoref{lasertram_gui}. Built primarily using Plotly-Dash [Plotly Technologies @plotly], Numpy [@harris2020array], and pandas [@mckinney2010data], we present a completely open-source dashboard: Laser Time Resolved Analysis Module Dashboard (LaserTRAM-DB) that allows the user to calculate concentrations from raw LA-ICP-MS data with the flexibility of a GUI interface while maintaining the performance of the numerical python ecosystem. Furthermore, by simultaneously displaying both raw data cps and internal standard normalized cps, it allows for rapid decision making about data quality to be determined. It is comprised of three parts:
 
 1. **LaserTRAM:** Choosing an interval of interest from raw cps data in individual spot analyses and normalizing it to an internal standard.
 
@@ -64,7 +65,7 @@ $$
 
 ## Determining Normalized Ratios
 
-The purpose of LaserTRAM-DB is to give the user complete control over how much of an analysis gets used in calculating concentrations (e.g., filtering out portions of the signal not reflective of the material under investigation). When a given interval has been chosen, every analyte is normalized to a chosen internal standard. LaserTRAM-DB allows for any analyte in the experiment to be used as the internal standard. Prior to normalization to an internal standard, raw data first has the background analyte levels subtracted from it. Background is determined by taking the median counts per second value for each analyte over the specified background range. Once data have been background subtracted, each normalized ratio is calculated the following way:
+The purpose of LaserTRAM-DB is to give the user complete control over which portion of the analytical spectra gets used in calculating concentrations (e.g., filtering out portions of the signal not reflective of the material under investigation). In complex natural materials, selection of this interval and an overall judgement about data quality require an operator to make a decision. This sofware is optimized to allow that decision to be made as efficiently as possible. When a given interval has been chosen, every analyte is normalized to a chosen internal standard. LaserTRAM-DB allows for any analyte in the experiment to be used as the internal standard. Prior to normalization to an internal standard, raw data first has the background analyte levels subtracted from it. Background is determined by taking the median counts per second value for each analyte over the specified background range. Once data have been background subtracted, each normalized ratio is calculated the following way:
 
 $$
 N_i = median\left[\frac{cps_{i}}{cps_{is}}\right] \tag{4}
@@ -87,11 +88,11 @@ $$
 {RSE_i}^u = \left[\frac{SE}{N_i}\right]100 \tag{7}
 $$
 
-Detection limits for each analyte are 3 standard deviations above the mean of the background levels as defined earlier. This then means that you have 99.7\% confidence of that analyte being above background levels. This is standard practice in LA-ICP-MS data reduction. To reflect this in data output, normalized ratios below detection limit are coded to show up as negative ratios in LaserTRAM that then get turned into "b.d.l." values in LaserCalc.
+Detection limits for each analyte are 3 standard deviations above the mean of the background levels as defined earlier. This reflects 99.7\% confidence that the analyte is above background levels. This is standard practice in LA-ICP-MS data reduction. To reflect this in data output, normalized ratios below detection limit are coded to show up as negative ratios in LaserTRAM that then get turned into "b.d.l." values in LaserCalc.
 
 ## Concentrations of internal standard in unknown
 
-To calculate concentrations of a given analyte list in an unknown sample, the concentration of the internal standard must be known. LaserCalc takes these concentrations in the form of wt\% oxide and utilizes user interaction to input concentrations of the internal standard and its relative uncertainty (e.g., 1\%).
+To calculate concentrations of a given analyte list in an unknown sample, the concentration of the internal standard must be known. LaserCalc takes these concentrations in the form of wt\% oxide and utilizes user interaction to input concentrations of the internal standard and its relative uncertainty. A default value of 1\%  is used for this, but may be updated by the user.
 
 ## Drift Correction
 
@@ -112,12 +113,9 @@ Where $m$ is the regression slope, $x$ is the analysis number, and $b$ is the in
 
 ## Uncertainties
 
-Uncertainties in calculated concentrations are calculated according to standard error propagation of uncertainties in products and quotients @taylor1997introduction p.61:
-$$
-\frac{\sigma_q}{\lvert q \rvert}  = \sqrt{\left(\frac{\sigma_x}{\lvert x\rvert}\right)^2+\left(\frac{\sigma_y}{\lvert y\rvert}\right)^2+\left(\frac{\sigma_z}{\lvert z\rvert}\right)^2+...\left(\frac{\sigma_n}{\lvert n\rvert}\right)^2}
-$$
+Uncertainties in calculated concentrations are calculated according to standard error propagation of uncertainties in products and quotients 
 
-Because the formula for calculating concentrations of a given analyte in an unknown material is just a series of nested quotients and products we can explain the overall uncertainty of a given analyte as:
+Because the formula for calculating concentrations of a given analyte in an unknown material is just a series of nested quotients and products we can explain the overall uncertainty of a given analyte as [@taylor1997introduction p.61]:
 
 $$
 \sigma_{C_i} = {C_i}^u \sqrt{ \left( \frac{\sigma_{{C_u}^{n}}}{{C_u}^{n}}\right)^2 + \left( \frac{\sigma_{{C_i}^{std}}}{{C_i}^{std}}\right)^2 + \left( \frac{\sigma_{{C_n}^{std}}}{{C_n}^{std}}\right)^2 + \left({RSE_i}^{std}\right)^2 + \left({RSE_i}^{u}\right)^2} \tag{10}
@@ -133,7 +131,7 @@ Where $RMSE_i$ is the Root Mean Squared Error as specified in the Drift Correcti
 
 # Data Output
 
-Both steps of the data processing pipeline (e.g., LaserTRAM and LaserCalc) allow the user to output progress in the form of an Excel spreadsheet that mimics the application datatable hosted in the web browser. Output follows tidy data format (e.g. @wickham2014tidy where columns contain observation attributes (i.e., analytes values and associated metadata) and rows denote observations (i.e., an individual spot analysis).
+Both steps of the data processing pipeline (e.g., LaserTRAM and LaserCalc) allow the user to output progress in the form of an Excel spreadsheet that mimics the application datatable hosted in the web browser. Output follows tidy data format [@wickham2014tidy] where columns contain observation attributes (i.e., analytes values and associated metadata) and rows denote observations (i.e., an individual spot analysis).
 
 # Use
 
@@ -144,6 +142,6 @@ Video tutorials on how to use each piece of software can be found at the followi
 
 # Acknowledgements
 
-We express our gratitude to the W.M. Keck Foundation for helping foster the labarotory environment that led to the genesis of this software.
+We express our gratitude to the W.M. Keck Foundation for helping foster the labarotory environment that led to the genesis of this software as well as NSF project grants 1763639, 1948862, 1654275
 
 # References
