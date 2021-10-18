@@ -113,9 +113,7 @@ Where $m$ is the regression slope, $x$ is the analysis number, and $b$ is the in
 
 ## Uncertainties
 
-Uncertainties in calculated concentrations are calculated according to standard error propagation of uncertainties in products and quotients 
-
-Because the formula for calculating concentrations of a given analyte in an unknown material is just a series of nested quotients and products we can explain the overall uncertainty of a given analyte as [@taylor1997introduction p.61]:
+Calculating concentrations of a given analyte in an unknown material can be considered a series of nested quotients and products. Therefore, we quantify the overall uncertainty of a given analyte as [@taylor1997introduction p.61]:
 
 $$
 \sigma_{C_i} = {C_i}^u \sqrt{ \left( \frac{\sigma_{{C_u}^{n}}}{{C_u}^{n}}\right)^2 + \left( \frac{\sigma_{{C_i}^{std}}}{{C_i}^{std}}\right)^2 + \left( \frac{\sigma_{{C_n}^{std}}}{{C_n}^{std}}\right)^2 + \left({RSE_i}^{std}\right)^2 + \left({RSE_i}^{u}\right)^2} \tag{10}
