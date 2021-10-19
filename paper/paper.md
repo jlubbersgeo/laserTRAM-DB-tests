@@ -133,13 +133,6 @@ Where $RMSE_i$ is the Root Mean Squared Error as specified in the Drift Correcti
 
 Both steps of the data processing pipeline (e.g., LaserTRAM and LaserCalc) allow the user to output progress in the form of an Excel spreadsheet that mimics the application datatable hosted in the web browser. Output follows tidy data format [@wickham2014tidy] where columns contain observation attributes (i.e., analytes values and associated metadata) and rows denote observations (i.e., an individual spot analysis).
 
-# Use
-
-Video tutorials on how to use each piece of software can be found at the following links:
-
-- [LaserTRAM video](https://www.youtube.com/watch?v=ALVzTdMnS-k&t=338s&ab_channel=JordanLubbers)
-- [LaserCalc video](https://www.youtube.com/watch?v=vWmwE5XO5l0&t=1s&ab_channel=JordanLubbers)
-
 # Acknowledgements
 
 We express our gratitude to the W.M. Keck Foundation for helping foster the labarotory environment that led to the genesis of this software as well as NSF project grants 1763639, 1948862,  and 1654275.
