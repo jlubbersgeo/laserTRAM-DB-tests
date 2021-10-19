@@ -17,7 +17,9 @@ It is comprised of 3 parts:
 
 # Use
 
-LaserTRAM-DB can be downloaded from the source (here) and ran locally, or it can be run through the following heroku link: COMING SOON!
+LaserTRAM-DB can be downloaded from the source (here) and ran locally, or it can be run through the following heroku link: 
+
+[lasertram-db.herokuapp.com](https://lasertram-db.herokuapp.com/)
 
 # Demos
 Video tutorials on how to use each piece of software can be found at the following links:
