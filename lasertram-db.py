@@ -853,6 +853,8 @@ text_color = "Black"
 # Functions start here
 #%%
 # LaserTRAM
+
+# upload data callback
 @app.callback(
     [
         Output("stored_data", "data"),
@@ -917,11 +919,7 @@ def get_data(contents, filename):
     return data.to_json(orient="split"), spot_list, columns, analyte_list, int_std
 
 
-@app.callback(
-    [Output("stored_stds", "data")],
-    Input("upload-stds", "contents"),
-    State("upload-stds", "filename"),
-)
+# plotting data callback
 @app.callback(
     [Output("raw-data", "figure"), Output("error-data", "figure")],
     [
@@ -967,66 +965,43 @@ def plot(spot, stored_data, interval_slider, int_std, filename):
             int_start_idx = np.where(df["Time"] > interval_slider[2])[0][0]
             int_stop_idx = np.where(df["Time"] > interval_slider[3])[0][0]
             
-            # #get background cps values
-            # bkgd_data = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].median()
-            
-            # # detection limits are 3 std dev from bkground signal
-            # detection_limits = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].std() * 3
-            
-            # # subtract background cps from signal
-            # bkgd_correct_data = (
-            #     df.iloc[int_start_idx:int_stop_idx, :]
-            #     .drop("Time", axis="columns")
-            #     .subtract(bkgd_data, axis="columns")
-            # )
-            # #normalize bkgd corrected data to internal standard
-            # bkgd_correct_normal_data = bkgd_correct_data.divide(
-            #     bkgd_correct_data[int_std], axis="rows"
-            # )
 
-            # # median background corrected normalized data
-            # bkgd_correct_med = bkgd_correct_normal_data[:].median()
-            
-            # #if below median cps values below detection limit, set normalized
-            # # ratio to -9999. Use this to filter for below detection limit later
-            # # do the same thing with 0
-            # bkgd_correct_med.where(bkgd_correct_data.median() != 0, -9999, inplace=True)
-            # bkgd_correct_med.where(
-            #     bkgd_correct_data.median() >= detection_limits, -9999, inplace=True
-            # )
-            
-
-
-            # # std error calculation on normalized ratio for interval
-            # se = bkgd_correct_normal_data.std() / np.sqrt(
-            #     abs(int_stop_idx - int_start_idx)
-            # )
-
-            # # relative std error calculation
-            # rel_se = 100 * (se / bkgd_correct_med)
-            
-            # # add time column back in for plotting
-            # bkgd_correct_normal_data["Time"] = df.iloc[int_start_idx:int_stop_idx, 0]
-            
-            
-            
-    
             for e,i in zip(elements,range(len(elements))):
                 if e == int_std:
                     break
             int_std_loc = i
-                    
+            
+            # convert spot data to numpy array        
             df_n = df.to_numpy()
-            # int_std_loc = [elements.index(i) for i in elements if int_std in i]
+            
+            # get median background counts per second for each analyte
             bkgd_data = np.median(df_n[bkgd_start_idx:bkgd_stop_idx,1:],axis = 0)
+            
+            # get detection limits for each analyte: 3 std devs from bkgd_data
             detection_limits = np.std(df_n[bkgd_start_idx:bkgd_stop_idx,1:],axis = 0)*3
+            
+            # subtract background from interval signal
             bkgd_correct_data = df_n[int_start_idx:int_stop_idx,1:] - bkgd_data[int_std_loc]
+            
+            # normalize background corrected data to internal standard data 
             bkgd_correct_normal_data = bkgd_correct_data / bkgd_correct_data[:,int_std_loc][:,None]
+            
+            # median values for normalized data for interval
             bkgd_correct_med = np.median(bkgd_correct_normal_data,axis = 0)
+            
+            # flag median values that are below detection limit or 0 with -9999. This flag
+            # is used later in laser calc to say they are "b.d.l"
             bkgd_correct_med[np.median(bkgd_correct_data,axis = 0) <= detection_limits] = -9999
             bkgd_correct_med[np.median(bkgd_correct_data,axis = 0) == 0 ] = -9999
+            
+            # standard error of the normalized data over the chosen interval
             se = bkgd_correct_normal_data.std(axis = 0) / np.sqrt(abs(int_stop_idx - int_start_idx))
+            
+            # relative standard error
             rel_se = 100* (se / bkgd_correct_med)
+            
+            # turn numpy array into pandas dataframe and add back in time column.
+            # This step makes it easier to plot below
             bkgd_correct_normal_data = pd.DataFrame(bkgd_correct_normal_data,columns = elements)
             bkgd_correct_normal_data['Time'] = df_n[int_start_idx:int_stop_idx,0]
 
@@ -1149,7 +1124,7 @@ def plot(spot, stored_data, interval_slider, int_std, filename):
 
             return fig, error_fig
 
-
+# add "recorded" data to table for eventual export
 @app.callback(
     Output("adding-rows-table", "data"),
     [
@@ -1195,36 +1170,7 @@ def add_row(
                 int_start_idx = np.where(df["Time"] > interval_slider[2])[0][0]
                 int_stop_idx = np.where(df["Time"] > interval_slider[3])[0][0]
 
-                # bkgd_data = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].median()
-
-                # detection_limits = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].std() * 3
-
-                # bkgd_correct_data = (
-                #     df.iloc[int_start_idx:int_stop_idx, :]
-                #     .drop("Time", axis="columns")
-                #     .subtract(bkgd_data, axis="columns")
-                # )
-
-                # bkgd_correct_normal_data = bkgd_correct_data.divide(
-                #     bkgd_correct_data[int_std], axis="rows"
-                # )
-
-                # # median background corrected counts per second
-                # bkgd_correct_med = bkgd_correct_normal_data[:].median()
-
-                # bkgd_correct_med.where(
-                # bkgd_correct_data.median() >= detection_limits, -9999, inplace=True
-                # )
-                # # do the same thing with 0
-                # bkgd_correct_med.where(bkgd_correct_data.median() != 0, -9999, inplace=True)
-
-                # # std error calculation on normalized ratio for interval
-                # se = bkgd_correct_normal_data.std() / np.sqrt(
-                #     abs(int_stop_idx - int_start_idx)
-                # )
-
-                # # relative std error calculation
-                # rel_se = 100 * (se / bkgd_correct_med)
+                
                 elements = df.iloc[:, 1:].columns.tolist()
 
                 for e,i in zip(elements,range(len(elements))):
@@ -1233,7 +1179,6 @@ def add_row(
                 int_std_loc = i
                         
                 df_n = df.to_numpy()
-                # int_std_loc = [elements.index(i) for i in elements if int_std in i]
                 bkgd_data = np.median(df_n[bkgd_start_idx:bkgd_stop_idx,1:],axis = 0)
                 detection_limits = np.std(df_n[bkgd_start_idx:bkgd_stop_idx,1:],axis = 0)*3
                 bkgd_correct_data = df_n[int_start_idx:int_stop_idx,1:] - bkgd_data[int_std_loc]
@@ -1261,7 +1206,7 @@ def add_row(
 
             return rows
 
-
+# change sample next and previous buttons callback 
 @app.callback(
     Output("spot_dropdown", "value"),
     [
@@ -1317,6 +1262,8 @@ def move_sample(next_clicks, prev_clicks, stored_data, spot, filename):
 # LaserTRAM profiler
 # This is relatively uncommented because it is functionally the same as 
 # the LaserTRAM tab functions above. Where different it will be commented.
+
+# upload data callback
 @app.callback(
     [
         Output("stored_data_p", "data"),
@@ -1378,7 +1325,7 @@ def get_profile_data(contents, filename):
 
 # ----------------------
 
-
+# plotting profile callback
 @app.callback(
     [Output("raw-data_p", "figure"), Output("error-data_p", "figure")],
     [
@@ -1409,29 +1356,6 @@ def plot_profile(stored_data, interval_slider, int_std, filename):
         int_start_idx = np.where(df["Time"] > interval_slider[2])[0][0]
         int_stop_idx = np.where(df["Time"] > interval_slider[3])[0][0]
         
-
-        # bkgd_data = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].median()
-        # detection_limits = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].std() * 3
-        # bkgd_correct_data = df.iloc[int_start_idx:int_stop_idx, 1:].subtract(
-        #     bkgd_data, axis="columns"
-        # )
-
-        # bkgd_correct_normal_data = bkgd_correct_data.divide(bkgd_correct_data[int_std], axis="rows")
-
-        # # median background corrected counts per second
-        # bkgd_correct_med = bkgd_correct_normal_data[:].median()
-        # bkgd_correct_med.where(
-        #     bkgd_correct_data.median() >= detection_limits, -9999, inplace=True
-        # )
-        # bkgd_correct_med.where(bkgd_correct_data.median() != 0, -9999, inplace=True)
-
-        # # std error calculation on normalized ratio for interval
-        # se = bkgd_correct_normal_data.std() / np.sqrt(abs(int_stop_idx - int_start_idx))
-
-        # # relative std error calculation
-        # rel_se = 100 * (se / bkgd_correct_med)
-
-        # bkgd_correct_normal_data["Time"] = df.iloc[int_start_idx:int_stop_idx, 0]
         
         for e,i in zip(elements,range(len(elements))):
             if e == int_std:
@@ -1568,7 +1492,7 @@ def plot_profile(stored_data, interval_slider, int_std, filename):
 
         return fig, error_fig
 
-
+# add data to table after record button is pressed 
 # --------------
 @app.callback(
     Output("adding-rows-table_p", "data"),
@@ -1603,40 +1527,13 @@ def add_row_p(n_clicks, stored_data, interval_slider, int_std, rows, columns, fi
             int_start_idx = np.where(df["Time"] > interval_slider[2])[0][0]
             int_stop_idx = np.where(df["Time"] > interval_slider[3])[0][0]
 
-            # bkgd_data = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].median()
-            # detection_limits = df.iloc[bkgd_start_idx:bkgd_stop_idx, 1:].std() * 3
-            # bkgd_correct_data = (
-            #     df.iloc[int_start_idx:int_stop_idx, :]
-            #     .drop("Time", axis="columns")
-            #     .subtract(bkgd_data, axis="columns")
-            # )
-            # bkgd_correct_normal_data = bkgd_correct_data.divide(
-            #     bkgd_correct_data[int_std], axis="rows"
-            # )
-
-            # # median background corrected counts per second
-            # bkgd_correct_med = bkgd_correct_normal_data[:].median()
-            # bkgd_correct_med.where(
-            # bkgd_correct_data.median() >= detection_limits, -9999, inplace=True
-            # )
-            # bkgd_correct_med.where(bkgd_correct_data.median() != 0, -9999, inplace=True)
-
-            # # std error calculation on normalized ratio for interval
-            # se = bkgd_correct_normal_data.std() / np.sqrt(
-            #     abs(int_stop_idx - int_start_idx)
-            # )
-
-            # # relative std error calculation
-            # rel_se = 100 * (se / bkgd_correct_med)
-
-            # bkgd_correct_normal_data["Time"] = df.iloc[int_start_idx:int_stop_idx, 0]
+            
             for e,i in zip(elements,range(len(elements))):
                 if e == int_std:
                     break
             int_std_loc = i
                     
             df_n = df.to_numpy()
-            # int_std_loc = [elements.index(i) for i in elements if int_std in i]
             bkgd_data = np.median(df_n[bkgd_start_idx:bkgd_stop_idx,1:],axis = 0)
             detection_limits = np.std(df_n[bkgd_start_idx:bkgd_stop_idx,1:],axis = 0)*3
             bkgd_correct_data = df_n[int_start_idx:int_stop_idx,1:] - bkgd_data[int_std_loc]
@@ -1662,16 +1559,13 @@ def add_row_p(n_clicks, stored_data, interval_slider, int_std, rows, columns, fi
 
         return rows
 
-
+# jump interval based on input value and button clicks callback
 # ----------
 @app.callback(
     Output("interval_slider_p", "value"),
     [
         Input("forward_btn_p", "n_clicks"),
         Input("back_btn_p", "n_clicks"),
-        # Input("stored_data", "data"),
-        # Input("interval_slider", "value"),
-        # Input("int_std_dropdown", "value"),
         Input("step_val_p", "value"),
     ],
     [State("upload-data_p", "filename"), State("interval_slider_p", "value")],
@@ -1708,16 +1602,14 @@ def jump(n_clicks_f, n_clicks_b, step_val, filename, interval_slider):
 
 #%%
 # LaserCalc
+# upload data from lasertram output button
 @app.callback(
     [
         Output("stored_data_c", "data"),
         Output("std_dropdown", "options"),
-        # Output("concentrations_table", "columns"),
-        # Output("concentrations_table", "data"),
         Output("int_std_table", "columns"),
         Output("int_std_table", "data"),
         Output("std_dropdown", "value"),
-        # Output("table_header", "children"),
     ],
     Input("upload-data_c", "contents"),
     State("upload-data_c", "filename"),
@@ -1824,7 +1716,7 @@ def get_ratio_data(contents, filename, columns, int_std_columns, header):
         calib_std,
     )
 
-
+#upload standard reference material sheet callback
 @app.callback(
     [Output("stored_stds", "data"),],
     Input("upload-stds", "contents"),
@@ -1854,7 +1746,8 @@ def get_stds(contents, filename):
 
     return (data.to_json(orient="split"),)
 
-
+# calculate concentrations based on uploaded data and chosen calibration
+# standard from dropdown 
 @app.callback(
     [
         Output("concentrations_table", "data"),
