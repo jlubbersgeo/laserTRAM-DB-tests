@@ -2,7 +2,7 @@
 
 LaserTRAM-DB is a dashboard for the complete processing pipeline of Laser Ablation Inductively Coupled Plasma Mass Spectrometry (LA-ICP-MS) data in complex materials such as geologic samples. As LA-ICP-MS data in geologic samples frequently have multiple phases, inclusions, and other compositional complexities within them that do not represent the material of interest, user interaction is required to filter unwanted signals out of the overall ablation signal. LaserTRAM-DB allows the user to filter which portion of the ablation peak is utilized in calculating concentrations, subsequently allowing for more accurate data to be obtained. Furthermore, it allows for the processing of both individual spot analysis data and a line of spots gathered in rapid succession, reducing the time required for data reduction while preserving spatial definition and still ensuring data quality.
 
-# Statement of Need
+## Statement of Need
 
 With a wide array of applications in the natural sciences (e.g., Caricchi et al., 2020; Fritz-Endres and Fehrenbacher 2021; Loewen and Kent 2012; Lukacs et al., 2021), laser ablation inductively coupled plasma mass spectrometry (LA-ICP-MS) is a now a commonplace tool for the gathering of in situ trace element (i.e., < 0.1 wt%) data from solid materials. The last two decades have seen significant advances in both instrument capabilities and operating software, allowing users to generate large volumes of in situ geochemical data in comparatively little time to previous methodologies (i.e., micro-drilling) while still maintaining high degrees of accuracy and precision.
 
@@ -21,7 +21,7 @@ It is comprised of 3 parts:
 
 ![LaserCalc GUI](images/LaserCalc_GUI.png)
 
-# Installation and Use
+## Installation and Use
 
 The easiest way to use LaserTRAM-DB is to use the following link: 
 
@@ -29,7 +29,7 @@ The easiest way to use LaserTRAM-DB is to use the following link:
 
 Alternatively, LaserTRAM-DB can be installed locally and run by creating a [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#installing-virtualenv):
 
-*Note: navigate to the desired directory prior to cloning the repository
+*Note: navigate to the desired directory prior to cloning the repository*
 
 ```
 git clone https://github.com/jlubbersgeo/laserTRAM-DB
@@ -49,20 +49,21 @@ python lasertram-db.py
 ```
 
 
-# Demos
+## Demos
 Video tutorials on how to use each piece of software can be found at the following links:
 
 - [LaserTRAM video](https://www.youtube.com/watch?v=ALVzTdMnS-k&t=338s&ab_channel=JordanLubbers)
 - [LaserTRAM profiler video](https://youtu.be/x6FINd_jvps)
 - [LaserCalc video](https://www.youtube.com/watch?v=vWmwE5XO5l0&t=1s&ab_channel=JordanLubbers)
 
-# Quickstart
+## Quickstart
 
 To get started, please watch the videos above in the Demos section. After that, sample data may be found in the "tests" folder:
 - LaserTRAM test data: ```spot_test_raw_data.xlsx```
 - LaserTRAM profile test data: Any of the following files: ```ATHO-G-7.csv```, ```BCR-2G-12.csv```,```BCR-2G-1.csv```,```BHVO-2G-3.csv```,```unknown_nist.csv```
 - LaserCalc test data: ```spot_test_lasertram_complete.xlsx```,```profile_test_lasertram_profiler_complete.xlsx```
 
+## Contributing
 
-Please reach out to Jordan Lubbers (lubbersj@oregonstate.edu) with any questions.
+One of the main goals of this project is to bring increased transparency to the fields that utilize LA-ICP-MS data. As such, we welcome feedback and suggestions to help improve the software! If you wish to be a part of further development, or have ideas for new features please open an [issue](https://github.com/jlubbersgeo/laserTRAM-DB/issues) here on GitHub or reach out to Jordan Lubbers (lubbersj@oregonstate.edu).
 
