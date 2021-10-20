@@ -21,7 +21,7 @@ The easiest way to use LaserTRAM-DB is to use the following link:
 
 [lasertram-db.herokuapp.com](https://lasertram-db.herokuapp.com/)
 
-Alternatively, LaserTRAM-DB can be installed locally and run by creating a virtual environment:
+Alternatively, LaserTRAM-DB can be installed locally and run by creating a [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#installing-virtualenv):
 
 ```
 git clone https://github.com/jlubbersgeo/laserTRAM-DB
