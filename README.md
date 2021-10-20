@@ -29,8 +29,7 @@ The easiest way to use LaserTRAM-DB is to use the following link:
 
 Alternatively, LaserTRAM-DB can be installed locally and run by creating a [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#installing-virtualenv):
 
-*Note: navigate to the desired directory prior to cloning the repository*
-
+### MacOS
 ```
 git clone https://github.com/jlubbersgeo/laserTRAM-DB
 cd /path/to/laserTRAM-DB
@@ -42,12 +41,24 @@ python lasertram-db.py
 
 When the program is running, copy and paste the provided link provided in the terminal window into the browswer window and the app will run. 
 
-You can close the program by entering ```ctrl + c``` in the terminal window. Any time from here on out simply navigate to the folder where the repository is cloned:
+You can close the program by entering ```ctrl + c``` in the terminal window or simply exiting the terminal window. 
+
+### Windows
 ```
+git clone https://github.com/jlubbersgeo/laserTRAM-DB
 cd /path/to/laserTRAM-DB
+python3 -m venv lasertram-db
+pip3 install -r ./requirements.txt
 python lasertram-db.py
 ```
 
+When the program is running, copy and paste the provided link provided in the terminal window into the browswer window and the app will run. 
+
+To exit the program here, simply close the terminal window.
+
+### Caveats
+- If you are completely new to [python](https://www.python.org/downloads/windows/) and [git](https://git-scm.com/download/win), make sure they are installed on your machine.
+- You will have to re-create the virtual environment each time you wish to use LaserTRAM-DB.
 
 ## Demos
 Video tutorials on how to use each piece of software can be found at the following links:
@@ -58,7 +69,7 @@ Video tutorials on how to use each piece of software can be found at the followi
 
 ## Quickstart
 
-To get started, please watch the videos above in the Demos section. After that, sample data may be found in the "tests" folder:
+With LaserTRAM-DB up and running, to get started, please watch the videos above in the Demos section. After that, sample data may be found in the "tests" folder:
 - LaserTRAM test data: ```spot_test_raw_data.xlsx```
 - LaserTRAM profile test data: Any of the following files: ```ATHO-G-7.csv```, ```BCR-2G-12.csv```,```BCR-2G-1.csv```,```BHVO-2G-3.csv```,```unknown_nist.csv```
 - LaserCalc test data: ```spot_test_lasertram_complete.xlsx```,```profile_test_lasertram_profiler_complete.xlsx```
