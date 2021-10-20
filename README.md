@@ -41,7 +41,6 @@ python lasertram-db.py
 ```
 
 
-
 # Demos
 Video tutorials on how to use each piece of software can be found at the following links:
 
@@ -49,6 +48,13 @@ Video tutorials on how to use each piece of software can be found at the followi
 - [LaserTRAM profiler video](https://youtu.be/x6FINd_jvps)
 - [LaserCalc video](https://www.youtube.com/watch?v=vWmwE5XO5l0&t=1s&ab_channel=JordanLubbers)
 
+# Quickstart
 
-Please reach out to Jordan Lubbers with any questions.
+To get started, please watch the videos above in the Demos section. After that, sample data may be found in the "tests" folder:
+- LaserTRAM test data: ```spot_test_raw_data.xlsx```
+- LaserTRAM profile test data: Any of the following files: ```ATHO-G-7.csv```, ```BCR-2G-12.csv```,```BCR-2G-1.csv```,```BHVO-2G-3.csv```,```unknown_nist.csv```
+- LaserCalc test data: ```spot_test_lasertram_complete.xlsx```,```profile_test_lasertram_profiler_complete.xlsx```
+
+
+Please reach out to Jordan Lubbers (lubbersj@oregonstate.edu) with any questions.
 
