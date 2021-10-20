@@ -15,7 +15,7 @@ It is comprised of 3 parts:
 
 ![LaserCalc GUI](images/LaserCalc_GUI.png)
 
-# Installation
+# Installation and Use
 
 The easiest way to use LaserTRAM-DB is to use the following link: 
 
