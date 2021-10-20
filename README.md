@@ -15,18 +15,40 @@ It is comprised of 3 parts:
 
 ![LaserCalc GUI](images/LaserCalc_GUI.png)
 
-# Use
+# Installation
 
-LaserTRAM-DB can be downloaded from the source (here) and ran locally, or it can be run through the following heroku link: 
+The easiest way to use LaserTRAM-DB is to use the following link: 
 
 [lasertram-db.herokuapp.com](https://lasertram-db.herokuapp.com/)
+
+Alternatively, LaserTRAM-DB can be installed locally and run by creating a virtual environment:
+
+```
+git clone https://github.com/jlubbersgeo/laserTRAM-DB
+cd /path/to/laserTRAM-DB
+python3 -m venv lasertram-db
+source ./lasertram-db/bin/activate
+pip3 install -r ./requirements.txt
+python lasertram-db.py
+```
+
+When the program is running, copy and paste the provided link provided in the terminal window into the browswer window and the app will run. 
+
+You can close the program by entering ```ctrl + c``` in the terminal window. Any time from here on out simply navigate to the folder where the repository is cloned:
+```
+cd /path/to/laserTRAM-DB
+python lasertram-db.py
+```
+
+
 
 # Demos
 Video tutorials on how to use each piece of software can be found at the following links:
 
 - [LaserTRAM video](https://www.youtube.com/watch?v=ALVzTdMnS-k&t=338s&ab_channel=JordanLubbers)
+- [LaserTRAM profiler video](https://youtu.be/x6FINd_jvps)
 - [LaserCalc video](https://www.youtube.com/watch?v=vWmwE5XO5l0&t=1s&ab_channel=JordanLubbers)
-- A LaserTRAM-profiler tutorial is coming soon!
+
 
 Please reach out to Jordan Lubbers with any questions.
 
